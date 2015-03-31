@@ -1,0 +1,375 @@
+﻿@{
+    ViewBag.Title = "Home Page";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<meta name="viewport" content="initial-scale=1.0, user-scalable=no">
+<meta charset="utf-8">
+<link href="~/Content/panel.css" rel="stylesheet" />
+<link href="~/Content/materialize/css/materialize.css" rel="stylesheet" />
+<link href="~/Content/lightSlider/css/lightSlider.css" rel="stylesheet" />
+<link href="~/Content/jquery.mmenu.all.css" rel="stylesheet" />
+<link href="~/Content/rate/jquery.raty.css" rel="stylesheet" />
+<script src="https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=places"></script>
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.0/jquery.min.js"></script>
+<script src="~/Scripts/infobubble.js"></script>
+@*<script type="text/javascript" src="http://google-maps-utility-library-v3.googlecode.com/svn/trunk/infobubble/src/infobubble.js"></script>*@
+<script src="~/Content/materialize/js/waves.js"></script>
+<script src="~/Scripts/CustomGoogleMapMarker.js"></script>
+<script src="~/Scripts/jquery.mmenu.min.all.js"></script>
+<script src="~/Content/lightSlider/js/jquery.lightSlider.js"></script>
+<script>
+    var map, placesList;
+
+    var service; //declare globally
+    var count = 0;
+    var count2 = 0;
+    var lt = 36.544484;
+    var lg = 31.998925;
+    var rd = 3600;
+    var x = new Array();
+    var infoBubble;
+    var placeType = "restaurant";
+    $(document).ready(function () {
+        //$.getScript('/Content/lightSlider/js/jquery.lightSlider.js');
+        $.getScript('/Content/rate/jquery.raty.js');
+
+        infoBubble = new InfoBubble({
+            maxWidth: 300,
+            position: new google.maps.LatLng(-35, 151),
+            shadowStyle: 1,
+            padding: 8,
+            backgroundColor: 'rgb(237, 247, 247)',
+            borderRadius: 10,
+            arrowSize: 15,
+            borderWidth: 1,
+            borderColor: 'rgb(41, 176, 173)',
+            disableAutoPan: true,
+            //hideCloseButton: true,
+            arrowPosition: 30,
+            backgroundClassName: 'phoney',
+            arrowStyle: 2,
+            minHeight: 118
+        });
+        $('#panel').toggle("slow");
+        $('#panel-body').toggle("slow");
+        $('#panel').css({ top: '60px' });
+        $('#panel').css({ width: '145px !important' });
+
+
+        var flag = false;
+        $("#togglePanel").bind('touchstart click', function () {
+            if (!flag) {
+                flag = true;
+                setTimeout(function () { flag = false; }, 100);
+                $('#panel-body').toggle("slow");
+                if ($('#panel').css('top') != "60px") {
+                    $('#panel').css({ top: '60px' });
+                    $('#panel').css({ width: '145px' });
+                }
+                else {
+                    $('#panel').css({ top: '82px' });
+                    $('#panel').css({ width: '200px' });
+                }
+            }
+
+            return false
+        });
+
+        var flag2 = false;
+        $("#detailModal").bind('touchstart click', function () {
+            if (!flag2) {
+                flag2 = true;
+                setTimeout(function () { flag2 = false; }, 100);
+            }
+            return false
+        });
+
+        var flag3 = false;
+        $("#bar").bind('touchstart click', function () {
+            if (!flag3) {
+                flag3 = true;
+                setTimeout(function () { flag3 = false; }, 100);
+                placeType = 'bar';
+                initialize();
+            }
+            return false
+        });
+        var flag4 = false;
+        $("#taxi").bind('touchstart click', function () {
+            if (!flag4) {
+                flag4 = true;
+                setTimeout(function () { flag4 = false; }, 100);
+                placeType = 'taxi';
+                initialize();
+            }
+            return false
+        });
+        var flag5 = false;
+        $("#pizza").bind('touchstart click', function () {
+            if (!flag5) {
+                flag5 = true;
+                setTimeout(function () { flag5 = false; }, 100);
+                placeType = 'pizza';
+                initialize();
+            }
+            return false
+        });
+
+        //disable google infowindow
+        $("#map-canvas").on("mousedown", function () {
+            setTimeout(function () {
+                disableInfoWindows();
+                if ($('#panel').css('top') != "60px") {
+                    $('#panel-body').toggle("slow");
+                    $('#panel').css({ top: '60px' });
+                    $('#panel').css({ width: '145px' });
+                }
+            }, 455);
+        });
+
+        function disableInfoWindows() {
+            $(".gm-iw.gm-sm").parent().parent().remove();
+            $("[style='position: absolute; left: -2px; top: -336px; width: 59px; height: 492px; -webkit-user-select: none; border: 0px; padding: 0px; margin: 0px;']")
+            .parent()
+            .parent()
+            .remove();
+        }
+        //////////////////////////////
+        $(window).resize(function () {
+            $("#map-canvas").height($(window).height() - 60);
+
+        });
+        $('#menu').mmenu({
+            extensions: ['effect-slide', 'pageshadow', "theme-dark"],
+            header: true,
+            searchfield: true,
+            counters: true,
+            footer: {
+                add: true,
+                content: '<a href="">Visit website &rsaquo;</a>'
+            }
+
+        });
+
+    });
+    function initialize() {
+
+        //$("#map-canvas").width($(document).width());
+
+        $("#map-canvas").height($(window).height() - 60);
+        var pyrmont = new google.maps.LatLng(lt, lg);
+        map = new google.maps.Map(document.getElementById('map-canvas'), {
+            center: pyrmont,
+            zoom: 14,
+            clickableLabels: false
+        });
+
+
+        jQuery('#places').html('');
+        placesList = document.getElementById('places');
+        service = new google.maps.places.PlacesService(map);
+
+        //var request = {
+        //    location: pyrmont,
+        //    radius: rd,
+        //    types: ['restaurant']
+        //};
+
+        $.ajax({
+            url: '../Content/Data/' + placeType + 'Detay.txt',
+            type: 'GET',
+            success: detayCallback,
+            error: detayCallback
+        });
+    }
+
+    function callback(data) {
+        var obj = JSON.parse(data);
+        for (var i = 0; i < obj.length; i++) {
+            createMarker(obj[i]);
+            count++;
+        }
+
+    }
+    function detayCallback(data) {
+        x = JSON.parse(data);
+        $.ajax({
+            url: '../Content/Data/' + placeType + '.txt',
+            type: 'GET',
+            success: callback,
+            error: callback
+        });
+    }
+
+    function createMarker(place) {
+
+        var image = {
+            url: place.icon,
+            scaledSize: new google.maps.Size(25, 25)
+        };
+        var myLatlng = new google.maps.LatLng(place.geometry.location.k, place.geometry.location.D);
+        var marker = new google.maps.Marker({
+            map: map,
+            icon: {
+                path: google.maps.SymbolPath.CIRCLE,
+                scale: 1
+            },
+            position: myLatlng
+        });
+
+
+        var overlay = new CustomMarker(
+          myLatlng,
+          map,
+          {
+              marker_id: 'mdi-maps-local-' + placeType,
+              request: { placeId: place.place_id },
+              marker: marker
+          }
+      );
+
+        var details = jQuery.grep(x, function (a) {
+            return a.id == place.id;
+        });
+
+        if (place.opening_hours != undefined) {
+            if (place.opening_hours.open_now) {
+                if (place.rating != undefined) {
+                    jQuery('#places').append('<li class="open" data-placeid="' + place.place_id + '">' + details[0].name + ' - ' + place.rating + '/5<small></small></li>');
+                    count2++;
+                }
+                else { jQuery('#places').append('<li class="open" data-placeid="' + place.place_id + '">' + details[0].name + '<small></small></li>'); }
+                count2++;
+            }
+        }
+        else {
+            if (place.rating != undefined) {
+                jQuery('#places').append('<li data-placeid="' + place.place_id + '">' + details[0].name + ' - ' + place.rating + '/5<small></small></li>');
+                count2++;
+            }
+            else {
+                jQuery('#places').append('<li data-placeid="' + place.place_id + '">' + details[0].name + '<small></small></li>');
+                count2++;
+            }
+        }
+    }
+
+    google.maps.event.addDomListener(window, 'load', initialize);
+    jQuery(document).on('click', '#places li', function () {
+        var self = jQuery(this);
+        $('.details').remove();
+        var request = { placeId: self.data('placeid') };
+        service.getDetails(request, function (details, status) {
+
+            var content = "<div class='details'><br />";
+            if (details.formatted_address != undefined) {
+                content += details.formatted_address + "<br />";
+            }
+            if (details.website != undefined) {
+                content += details.website + "<br />";
+            }
+            if (details.rating != undefined) {
+                content += details.rating + "<br />";
+            }
+            if (details.formatted_phone_number != undefined) {
+                content += details.formatted_phone_number;
+            }
+            content += "</div>";
+
+            jQuery('small', self).html(content);
+            map.setZoom(20);
+            map.panTo(details.geometry.location);
+        });
+
+    });
+
+
+</script>
+<div id="menu">
+    <ul>
+        <li><a id="bar"><i class="mdi-maps-local-bar" style="padding-right: 10px;"></i>Bar</a></li>
+        <li>
+            <a id="restaurant"><i class="mdi-maps-local-restaurant" style="padding-right: 10px;"></i>Food</a>
+            <ul>
+                <li><a id="pizza"><i class="mdi-maps-local-pizza" style="padding-right: 10px;"></i>Pizza</a></li>               
+                <li><a id=""><i class="mdi-maps-local-pizza" style="padding-right: 10px;"></i>Pizza</a></li>
+            </ul>
+        </li>
+        <li><a id="taxi"><i class="mdi-maps-local-taxi" style="padding-right: 10px;"></i>Taxi</a></li>
+    </ul>
+</div>
+<a id="hamburger" class="waves-effect waves-light btn light-blue accent-2" style="position: absolute;top: 430px;left: 10px;" href="#menu"><i class="mdi-action-list" style="float:right"></i></a>
+<div style="margin-top:50px">
+    <div id="map-canvas"></div>
+
+
+    <div id="panel" class="visible open">
+        <a id="togglePanel" class="waves-effect waves-light btn light-blue accent-2" style="width: 100%;"> <span>places</span><i class="mdi-action-list" style="float:right"></i></a>
+        <div id="panel-body">
+            <ul id="places"></ul>
+        </div>
+    </div>
+    @*<div id="footerMenu" style=" position: fixed; width: 100%">
+            <a id="togglesearch" class="waves-effect waves-light btn light-blue accent-2" style="width: 100%; z-index: 9999; bottom: 0; position:relative;">
+                <span>Search</span><i class="mdi-action-search" style="float:right"></i>
+            </a>
+            <div id="altMenu" style="background:darkGray; height:50px; position:relative; width:100%;z-index: 999;bottom: 0;padding: 10px;color: #fff;display:none;">
+                <a class="btn-floating btn-large waves-effect waves-light cyan darken-1" style="top: -34px; margin-left: 5px;"><i class="mdi-maps-local-bar"></i></a>
+                <a class="btn-floating btn-large waves-effect waves-light cyan darken-1" style="top: -34px; margin-left: 5px;"><i class="mdi-maps-local-bar"></i></a>
+                <a class="btn-floating btn-large waves-effect waves-light cyan darken-1" style="top: -34px; margin-left: 5px;"><i class="mdi-maps-local-bar"></i></a>
+                <a class="btn-floating btn-large waves-effect waves-light cyan darken-1" style="top: -34px; margin-left: 5px;"><i class="mdi-maps-local-bar"></i></a>
+                <a class="btn-floating btn-large waves-effect waves-light cyan darken-1" style="top: -34px; margin-left: 5px;"><i class="mdi-maps-local-bar"></i></a>
+                <a class="btn-floating btn-large waves-effect waves-light cyan darken-1" style="top: -34px; margin-left: 5px;"><i class="mdi-maps-local-bar"></i></a>
+                <a class="btn-floating btn-large waves-effect waves-light cyan darken-1" style="top: -34px; margin-left: 5px;"><i class="mdi-maps-local-bar"></i></a>
+                <a class="btn-floating btn-large waves-effect waves-light cyan darken-1" style="top: -34px; margin-left: 5px;"><i class="mdi-maps-local-bar"></i></a>
+                <a class="btn-floating btn-large waves-effect waves-light cyan darken-1" style="top: -34px; margin-left: 5px;"><i class="mdi-maps-local-bar"></i></a>
+                <a class="btn-floating btn-large waves-effect waves-light cyan darken-1" style="top: -34px; margin-left: 5px;"><i class="mdi-maps-local-bar"></i></a>
+                <a class="btn-floating btn-large waves-effect waves-light cyan darken-1" style="top: -34px; margin-left: 5px;"><i class="mdi-maps-local-bar"></i></a>
+                <a class="btn-floating btn-large waves-effect waves-light cyan darken-1" style="top: -34px; margin-left: 5px;"><i class="mdi-maps-local-bar"></i></a>
+                <a class="btn-floating btn-large waves-effect waves-light cyan darken-1" style="top: -34px; margin-left: 5px;"><i class="mdi-maps-local-bar"></i></a>
+                <a class="btn-floating btn-large waves-effect waves-light cyan darken-1" style="top: -34px; margin-left: 5px;"><i class="mdi-maps-local-bar"></i></a>
+                <a class="btn-floating btn-large waves-effect waves-light cyan darken-1" style="top: -34px; margin-left: 5px;"><i class="mdi-maps-local-bar"></i></a>
+                <a class="btn-floating btn-large waves-effect waves-light cyan darken-1" style="top: -34px; margin-left: 5px;"><i class="mdi-maps-local-bar"></i></a>
+                <a class="btn-floating btn-large waves-effect waves-light cyan darken-1" style="top: -34px; margin-left: 5px;"><i class="mdi-maps-local-bar"></i></a>
+                <a class="btn-floating btn-large waves-effect waves-light cyan darken-1" style="top: -34px; margin-left: 5px;"><i class="mdi-maps-local-bar"></i></a>
+                <a class="btn-floating btn-large waves-effect waves-light cyan darken-1" style="top: -34px; margin-left: 5px;"><i class="mdi-maps-local-bar"></i></a>
+                <a class="btn-floating btn-large waves-effect waves-light cyan darken-1" style="top: -34px; margin-left: 5px;"><i class="mdi-maps-local-bar"></i></a>
+                <a class="btn-floating btn-large waves-effect waves-light cyan darken-1" style="top: -34px; margin-left: 5px;"><i class="mdi-maps-local-bar"></i></a>
+                <a class="btn-floating btn-large waves-effect waves-light cyan darken-1" style="top: -34px; margin-left: 5px;"><i class="mdi-maps-local-bar"></i></a>
+                <a class="btn-floating btn-large waves-effect waves-light cyan darken-1" style="top: -34px; margin-left: 5px;"><i class="mdi-maps-local-bar"></i></a>
+                <a class="btn-floating btn-large waves-effect waves-light cyan darken-1" style="top: -34px; margin-left: 5px;"><i class="mdi-maps-local-bar"></i></a>
+                <a class="btn-floating btn-large waves-effect waves-light cyan darken-1" style="top: -34px; margin-left: 5px;"><i class="mdi-maps-local-bar"></i></a>
+            </div>
+        </div>*@
+    <!-- Button trigger modal -->
+    <!-- Modal -->
+    <div class="modal fade" id="imageModal" tabindex="-1" role="dialog" aria-labelledby="imageModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <div class="modal-title" id="imageModalLabel">Modal title</div>
+                </div>
+                <div class="modal-body" id="imageModalBody">
+                    <ul id="lightSlider"></ul>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="rateModal" tabindex="-1" role="dialog" aria-labelledby="rateModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <div class="modal-title" id="rateModalLabel">Modal title</div>
+                </div>
+                <div class="modal-title-review">Reviews</div>
+                <div class="modal-body" id="reviewModalBody">
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
