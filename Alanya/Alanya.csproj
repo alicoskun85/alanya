@@ -188,7 +188,6 @@
     <Content Include="Content\lightSlider\js\jquery.lightSlider.js" />
     <Content Include="Content\lightSlider\js\jquery.lightSlider.min.js" />
     <Content Include="Content\materialize\css\materialize.css" />
-    <Content Include="Content\materialize\css\materialize.min.css" />
     <Content Include="Content\materialize\js\init.js" />
     <Content Include="Content\materialize\js\leanModal.js" />
     <Content Include="Content\materialize\js\waves.js" />
@@ -228,6 +227,7 @@
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
+    <Content Include="Scripts\jquery.min.js" />
     <Content Include="Scripts\jquery.mmenu.min.all.js" />
     <Content Include="Scripts\jquery.sidr.min.js" />
     <Content Include="Scripts\jquery.validate.js" />

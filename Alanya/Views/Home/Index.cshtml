@@ -4,19 +4,19 @@
 }
 <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
 <meta charset="utf-8">
-<link href="~/Content/panel.css" rel="stylesheet" />
+@*<link href="~/Content/panel.css" rel="stylesheet" />*@
 <link href="~/Content/materialize/css/materialize.css" rel="stylesheet" />
-<link href="~/Content/lightSlider/css/lightSlider.css" rel="stylesheet" />
-<link href="~/Content/jquery.mmenu.all.css" rel="stylesheet" />
-<link href="~/Content/rate/jquery.raty.css" rel="stylesheet" />
+@*<link href="~/Content/lightSlider/css/lightSlider.css" rel="stylesheet" />
+    <link href="~/Content/jquery.mmenu.all.css" rel="stylesheet" />
+    <link href="~/Content/rate/jquery.raty.css" rel="stylesheet" />*@
 <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=places"></script>
-<script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.0/jquery.min.js"></script>
-<script src="~/Scripts/infobubble.js"></script>
+@*<script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.0/jquery.min.js"></script>*@
+@*<script src="~/Scripts/infobubble.js"></script>*@
 @*<script type="text/javascript" src="http://google-maps-utility-library-v3.googlecode.com/svn/trunk/infobubble/src/infobubble.js"></script>*@
-<script src="~/Content/materialize/js/waves.js"></script>
-<script src="~/Scripts/CustomGoogleMapMarker.js"></script>
-<script src="~/Scripts/jquery.mmenu.min.all.js"></script>
-<script src="~/Content/lightSlider/js/jquery.lightSlider.js"></script>
+@*<script src="~/Content/materialize/js/waves.js"></script>*@
+@*<script src="~/Scripts/CustomGoogleMapMarker.js"></script>
+    <script src="~/Scripts/jquery.mmenu.min.all.js"></script>
+    <script src="~/Content/lightSlider/js/jquery.lightSlider.js"></script>*@
 <script>
     var map, placesList;
 
@@ -295,14 +295,14 @@
         <li>
             <a id="restaurant"><i class="mdi-maps-local-restaurant" style="padding-right: 10px;"></i>Food</a>
             <ul>
-                <li><a id="pizza"><i class="mdi-maps-local-pizza" style="padding-right: 10px;"></i>Pizza</a></li>               
+                <li><a id="pizza"><i class="mdi-maps-local-pizza" style="padding-right: 10px;"></i>Pizza</a></li>
                 <li><a id=""><i class="mdi-maps-local-pizza" style="padding-right: 10px;"></i>Pizza</a></li>
             </ul>
         </li>
         <li><a id="taxi"><i class="mdi-maps-local-taxi" style="padding-right: 10px;"></i>Taxi</a></li>
     </ul>
 </div>
-<a id="hamburger" class="waves-effect waves-light btn light-blue accent-2" style="position: absolute;top: 430px;left: 10px;" href="#menu"><i class="mdi-action-list" style="float:right"></i></a>
+<a id="hamburger" class="waves-effect waves-light btn light-blue accent-2" style="position: fixed;bottom: 0px;width: 100%;" href="#menu"><i class="mdi-action-list" style="float:right"></i></a>
 <div style="margin-top:50px">
     <div id="map-canvas"></div>
 
@@ -313,38 +313,7 @@
             <ul id="places"></ul>
         </div>
     </div>
-    @*<div id="footerMenu" style=" position: fixed; width: 100%">
-            <a id="togglesearch" class="waves-effect waves-light btn light-blue accent-2" style="width: 100%; z-index: 9999; bottom: 0; position:relative;">
-                <span>Search</span><i class="mdi-action-search" style="float:right"></i>
-            </a>
-            <div id="altMenu" style="background:darkGray; height:50px; position:relative; width:100%;z-index: 999;bottom: 0;padding: 10px;color: #fff;display:none;">
-                <a class="btn-floating btn-large waves-effect waves-light cyan darken-1" style="top: -34px; margin-left: 5px;"><i class="mdi-maps-local-bar"></i></a>
-                <a class="btn-floating btn-large waves-effect waves-light cyan darken-1" style="top: -34px; margin-left: 5px;"><i class="mdi-maps-local-bar"></i></a>
-                <a class="btn-floating btn-large waves-effect waves-light cyan darken-1" style="top: -34px; margin-left: 5px;"><i class="mdi-maps-local-bar"></i></a>
-                <a class="btn-floating btn-large waves-effect waves-light cyan darken-1" style="top: -34px; margin-left: 5px;"><i class="mdi-maps-local-bar"></i></a>
-                <a class="btn-floating btn-large waves-effect waves-light cyan darken-1" style="top: -34px; margin-left: 5px;"><i class="mdi-maps-local-bar"></i></a>
-                <a class="btn-floating btn-large waves-effect waves-light cyan darken-1" style="top: -34px; margin-left: 5px;"><i class="mdi-maps-local-bar"></i></a>
-                <a class="btn-floating btn-large waves-effect waves-light cyan darken-1" style="top: -34px; margin-left: 5px;"><i class="mdi-maps-local-bar"></i></a>
-                <a class="btn-floating btn-large waves-effect waves-light cyan darken-1" style="top: -34px; margin-left: 5px;"><i class="mdi-maps-local-bar"></i></a>
-                <a class="btn-floating btn-large waves-effect waves-light cyan darken-1" style="top: -34px; margin-left: 5px;"><i class="mdi-maps-local-bar"></i></a>
-                <a class="btn-floating btn-large waves-effect waves-light cyan darken-1" style="top: -34px; margin-left: 5px;"><i class="mdi-maps-local-bar"></i></a>
-                <a class="btn-floating btn-large waves-effect waves-light cyan darken-1" style="top: -34px; margin-left: 5px;"><i class="mdi-maps-local-bar"></i></a>
-                <a class="btn-floating btn-large waves-effect waves-light cyan darken-1" style="top: -34px; margin-left: 5px;"><i class="mdi-maps-local-bar"></i></a>
-                <a class="btn-floating btn-large waves-effect waves-light cyan darken-1" style="top: -34px; margin-left: 5px;"><i class="mdi-maps-local-bar"></i></a>
-                <a class="btn-floating btn-large waves-effect waves-light cyan darken-1" style="top: -34px; margin-left: 5px;"><i class="mdi-maps-local-bar"></i></a>
-                <a class="btn-floating btn-large waves-effect waves-light cyan darken-1" style="top: -34px; margin-left: 5px;"><i class="mdi-maps-local-bar"></i></a>
-                <a class="btn-floating btn-large waves-effect waves-light cyan darken-1" style="top: -34px; margin-left: 5px;"><i class="mdi-maps-local-bar"></i></a>
-                <a class="btn-floating btn-large waves-effect waves-light cyan darken-1" style="top: -34px; margin-left: 5px;"><i class="mdi-maps-local-bar"></i></a>
-                <a class="btn-floating btn-large waves-effect waves-light cyan darken-1" style="top: -34px; margin-left: 5px;"><i class="mdi-maps-local-bar"></i></a>
-                <a class="btn-floating btn-large waves-effect waves-light cyan darken-1" style="top: -34px; margin-left: 5px;"><i class="mdi-maps-local-bar"></i></a>
-                <a class="btn-floating btn-large waves-effect waves-light cyan darken-1" style="top: -34px; margin-left: 5px;"><i class="mdi-maps-local-bar"></i></a>
-                <a class="btn-floating btn-large waves-effect waves-light cyan darken-1" style="top: -34px; margin-left: 5px;"><i class="mdi-maps-local-bar"></i></a>
-                <a class="btn-floating btn-large waves-effect waves-light cyan darken-1" style="top: -34px; margin-left: 5px;"><i class="mdi-maps-local-bar"></i></a>
-                <a class="btn-floating btn-large waves-effect waves-light cyan darken-1" style="top: -34px; margin-left: 5px;"><i class="mdi-maps-local-bar"></i></a>
-                <a class="btn-floating btn-large waves-effect waves-light cyan darken-1" style="top: -34px; margin-left: 5px;"><i class="mdi-maps-local-bar"></i></a>
-                <a class="btn-floating btn-large waves-effect waves-light cyan darken-1" style="top: -34px; margin-left: 5px;"><i class="mdi-maps-local-bar"></i></a>
-            </div>
-        </div>*@
+
     <!-- Button trigger modal -->
     <!-- Modal -->
     <div class="modal fade" id="imageModal" tabindex="-1" role="dialog" aria-labelledby="imageModalLabel" aria-hidden="true">
