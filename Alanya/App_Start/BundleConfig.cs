@@ -35,11 +35,9 @@ namespace Alanya
             //        "~/Scripts/materialize/js/materialize.min.css"));
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
-
                       "~/Content/bootstrap.css",
                       "~/Content/site.css",
                       "~/Content/panel.css",
-
                       "~/Content/lightSlider/css/lightSlider.css",
                       "~/Content/jquery.mmenu.all.css",
                       "~/Content/rate/jquery.raty.css"

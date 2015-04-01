@@ -22,7 +22,7 @@
         $.getScript('/Content/rate/jquery.raty.js');
 
         infoBubble = new InfoBubble({
-            maxWidth: 300,
+            maxWidth: 250,
             position: new google.maps.LatLng(-35, 151),
             shadowStyle: 1,
             padding: 8,
@@ -36,7 +36,7 @@
             arrowPosition: 30,
             backgroundClassName: 'phoney',
             arrowStyle: 2,
-            minHeight: 118
+            minHeight: 108
         });
         $('#panel').toggle("slow");
         $('#panel-body').toggle("slow");
@@ -185,19 +185,19 @@
     }
 
     function createMarker(place) {
-        //var image = {
-        //    url: place.icon,
-        //    scaledSize: new google.maps.Size(25, 25)
-        //};
+        var image = {
+            url: place.icon,
+            scaledSize: new google.maps.Size(25, 25)
+        };
         var myLatlng = new google.maps.LatLng(place.geometry.location.k, place.geometry.location.D);
-        //var marker = new google.maps.Marker({
-        //    map: map,
-        //    icon: {
-        //        path: google.maps.SymbolPath.CIRCLE,
-        //        scale: 1
-        //    },
-        //    position: myLatlng
-        //});
+        var marker = new google.maps.Marker({
+            map: map,
+            icon: {
+                path: google.maps.SymbolPath.CIRCLE,
+                scale: 1
+            },
+            position: myLatlng
+        });
 
 
         var overlay = new CustomMarker(
@@ -205,7 +205,8 @@
           map,
           {
               marker_id: 'mdi-maps-local-' + placeType,
-              request: { placeId: place.place_id }
+              request: { placeId: place.place_id },
+              marker: marker
           }
       );
 

@@ -5598,7 +5598,7 @@ a.list-group-item {
     font-size: 16px;
 }
 
-    /*.panel-title > a {
+/*.panel-title > a {
         color: inherit;
     }*/
 
@@ -5878,12 +5878,16 @@ button.close {
 
 .modal-header {
     min-height: 16.428571429px;
-    padding: 15px;
+    padding-left: 16px;
     border-bottom: 1px solid #e5e5e5;
+    padding-bottom: 5px;
+    padding-top: 5px;
 }
 
     .modal-header .close {
         margin-top: -2px;
+        margin-right: 10px;
+        width: 20px;
     }
 
 .modal-title {
@@ -5895,7 +5899,7 @@ button.close {
 
 .modal-body {
     position: relative;
-    padding: 20px;
+    padding: 10px;
 }
 
 .modal-footer {
@@ -5942,7 +5946,7 @@ button.close {
     .modal-dialog {
         right: auto;
         left: 50%;
-        width: 415px;
+        width: 344px;
         padding-top: 30px;
         padding-bottom: 30px;
     }

@@ -60,8 +60,8 @@ CustomMarker.prototype.draw = function () {
                 if (details.photos != undefined) {
                     modalTitle = details.name;
                     for (var i = 0; i < details.photos.length; i++) {
-                        thumbsList += details.photos[i].getUrl({ 'maxWidth': 35, 'maxHeight': 35 }) + ",";
-                        PicsList += details.photos[i].getUrl({ 'maxWidth': 350, 'maxHeight': 350 }) + ",";
+                        thumbsList += details.photos[i].getUrl({ 'maxWidth': 30, 'maxHeight': 30 }) + ",";
+                        PicsList += details.photos[i].getUrl({ 'maxWidth': 300, 'maxHeight': 300 }) + ",";
                     }
                     content += "<a class='btn-floating btn waves-effect waves-light pink lighten-3' style='float:right;margin-left: 10px;' onClick='imageDetayClick()'><i class='mdi-image-photo-camera'></i></a>";
                 }
@@ -119,10 +119,11 @@ function imageDetayClick() {
     $('#imageModal').modal({
         backdrop: false
     });
+
 }
 
 function reviewDetayClick() {
-    $("#reviewModalBody").html("");    
+    $("#reviewModalBody").html("");
     $("#rateModalLabel").html(modalTitle);
     for (var i = 0; i < reviewsObj.length; i++) {
         $("#reviewModalBody").append("<div class='panel panel-default'><div class='panel-heading' role='tab' id='headingThree'><h4 class='panel-title'><a class='collapsed' data-toggle='collapse' data-parent='#accordion' href='#collapse" + i + "' aria-expanded='false' aria-controls='collapse" + i + "'>" + reviewsObj[i].author_name + "<i class='mdi-hardware-keyboard-arrow-down' style='margin-left: 5px'></i></a><span id='rate" + i + "'style='float: right;'></span></h4></div><div id='collapse" + i + "' class='panel-collapse collapse' role='tabpanel' aria-labelledby='headingThree'><div class='panel-body'>" + reviewsObj[i].text + "</div></div></div>");
@@ -133,9 +134,10 @@ function reviewDetayClick() {
         });
     }
     $('#rateModal').modal({
-       
+
     });
     $('#collapse0').collapse({
         toggle: true
-    })
+    });
+
 }

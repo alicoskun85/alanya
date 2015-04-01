@@ -5732,10 +5732,10 @@ ul.tabs li.tab {
     font-size: 1.6rem;
     line-height: 37px; }
   .btn-floating.btn-large {
-    width: 33.5px;
-    height: 33.5px; }
+    width: 27.5px;
+    height: 27.5px; }
     .btn-floating.btn-large i {
-      line-height: 33.5px; }
+      line-height: 27.5px; }
 
 .fixed-action-btn {
   position: fixed;
