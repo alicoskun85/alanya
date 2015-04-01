@@ -23,7 +23,7 @@ namespace Alanya
                       "~/Scripts/bootstrap.js",
                       "~/Scripts/respond.js",
                       "~/Scripts/infobubble.js",
-                      //"~/Content/materialize/js/waves.js",
+                      "~/Content/materialize/js/waves.js",
                       "~/Scripts/CustomGoogleMapMarker.js",
                       "~/Scripts/jquery.mmenu.min.all.js",
                       "~/Content/lightSlider/js/jquery.lightSlider.js"

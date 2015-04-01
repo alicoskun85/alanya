@@ -4,19 +4,8 @@
 }
 <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
 <meta charset="utf-8">
-@*<link href="~/Content/panel.css" rel="stylesheet" />*@
 <link href="~/Content/materialize/css/materialize.css" rel="stylesheet" />
-@*<link href="~/Content/lightSlider/css/lightSlider.css" rel="stylesheet" />
-    <link href="~/Content/jquery.mmenu.all.css" rel="stylesheet" />
-    <link href="~/Content/rate/jquery.raty.css" rel="stylesheet" />*@
 <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=places"></script>
-@*<script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.0/jquery.min.js"></script>*@
-@*<script src="~/Scripts/infobubble.js"></script>*@
-@*<script type="text/javascript" src="http://google-maps-utility-library-v3.googlecode.com/svn/trunk/infobubble/src/infobubble.js"></script>*@
-@*<script src="~/Content/materialize/js/waves.js"></script>*@
-@*<script src="~/Scripts/CustomGoogleMapMarker.js"></script>
-    <script src="~/Scripts/jquery.mmenu.min.all.js"></script>
-    <script src="~/Content/lightSlider/js/jquery.lightSlider.js"></script>*@
 <script>
     var map, placesList;
 
@@ -30,7 +19,6 @@
     var infoBubble;
     var placeType = "restaurant";
     $(document).ready(function () {
-        //$.getScript('/Content/lightSlider/js/jquery.lightSlider.js');
         $.getScript('/Content/rate/jquery.raty.js');
 
         infoBubble = new InfoBubble({
