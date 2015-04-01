@@ -146,8 +146,6 @@
     });
     function initialize() {
 
-        //$("#map-canvas").width($(document).width());
-
         $("#map-canvas").height($(window).height() - 60);
         var pyrmont = new google.maps.LatLng(lt, lg);
         map = new google.maps.Map(document.getElementById('map-canvas'), {
@@ -156,16 +154,9 @@
             clickableLabels: false
         });
 
-
         jQuery('#places').html('');
         placesList = document.getElementById('places');
         service = new google.maps.places.PlacesService(map);
-
-        //var request = {
-        //    location: pyrmont,
-        //    radius: rd,
-        //    types: ['restaurant']
-        //};
 
         $.ajax({
             url: '../Content/Data/' + placeType + 'Detay.txt',
@@ -194,20 +185,19 @@
     }
 
     function createMarker(place) {
-
-        var image = {
-            url: place.icon,
-            scaledSize: new google.maps.Size(25, 25)
-        };
+        //var image = {
+        //    url: place.icon,
+        //    scaledSize: new google.maps.Size(25, 25)
+        //};
         var myLatlng = new google.maps.LatLng(place.geometry.location.k, place.geometry.location.D);
-        var marker = new google.maps.Marker({
-            map: map,
-            icon: {
-                path: google.maps.SymbolPath.CIRCLE,
-                scale: 1
-            },
-            position: myLatlng
-        });
+        //var marker = new google.maps.Marker({
+        //    map: map,
+        //    icon: {
+        //        path: google.maps.SymbolPath.CIRCLE,
+        //        scale: 1
+        //    },
+        //    position: myLatlng
+        //});
 
 
         var overlay = new CustomMarker(
@@ -215,8 +205,7 @@
           map,
           {
               marker_id: 'mdi-maps-local-' + placeType,
-              request: { placeId: place.place_id },
-              marker: marker
+              request: { placeId: place.place_id }
           }
       );
 
