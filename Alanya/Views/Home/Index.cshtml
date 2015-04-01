@@ -16,6 +16,7 @@
     var lg = 31.998925;
     var rd = 3600;
     var x = new Array();
+    var markers = [];
     var infoBubble;
     var placeType = "restaurant";
     $(document).ready(function () {
@@ -78,7 +79,7 @@
                 flag3 = true;
                 setTimeout(function () { flag3 = false; }, 100);
                 placeType = 'bar';
-                initialize();
+                getlaces();
                 API.close();
             }
             return false
@@ -89,7 +90,7 @@
                 flag4 = true;
                 setTimeout(function () { flag4 = false; }, 100);
                 placeType = 'taxi';
-                initialize();
+                getlaces();
                 API.close();
             }
             return false
@@ -100,7 +101,7 @@
                 flag5 = true;
                 setTimeout(function () { flag5 = false; }, 100);
                 placeType = 'pizza';
-                initialize();
+                getlaces();
                 API.close();
             }
             return false
@@ -142,7 +143,7 @@
 
         });
         var API = $("#menu").data("mmenu");
-
+        API.open();
     });
     function initialize() {
 
@@ -151,9 +152,20 @@
         map = new google.maps.Map(document.getElementById('map-canvas'), {
             center: pyrmont,
             zoom: 14,
+            disableDefaultUI: true,
+            zoomControl: true,
             clickableLabels: false
         });
-
+    }
+    function clearOverlays() {
+        for (var i = 0; i < markers.length; i++) {
+            markers[i].setMap(null);
+        }
+        $('.marker').remove()
+        markers.length = 0;
+    }
+    function getlaces() {
+        clearOverlays();
         jQuery('#places').html('');
         placesList = document.getElementById('places');
         service = new google.maps.places.PlacesService(map);
@@ -198,7 +210,7 @@
             },
             position: myLatlng
         });
-
+        markers.push(marker);
 
         var overlay = new CustomMarker(
           myLatlng,
