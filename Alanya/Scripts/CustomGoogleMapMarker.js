@@ -99,44 +99,4 @@ CustomMarker.prototype.getPosition = function () {
     return this.latlng;
 };
 
-function imageDetayClick() {
-    var thumbArr = thumbsList.split(',');
-    var PicsArr = PicsList.split(',');
-    $("#imageModalBody").html("");
-    $("#imageModalBody").append("<ul id='lightSlider'></ul>");
-    $("#imageModalLabel").html(modalTitle);
-    for (var i = 0; i < thumbArr.length - 1; i++) {
-        $("#lightSlider").append('<li data-thumb="' + thumbArr[i] + '"> <a href="#"><img src="' + PicsArr[i] + '" /></a> </li>')
-    }
-    $("#lightSlider").lightSlider({
-        gallery: true,
-        item: 1,
-        loop: false,
-        slideMargin: 0,
-        thumbItem: 9,
-        responsive: []
-    });
-    $('#imageModal').modal({
-        backdrop: false
-    });
-}
 
-function reviewDetayClick() {
-    $("#reviewModalBody").html("");
-    $("#rateModalLabel").html(modalTitle);
-    for (var i = 0; i < reviewsObj.length; i++) {
-        $("#reviewModalBody").append("<div class='panel panel-default'><div class='panel-heading' role='tab' id='headingThree'><h4 class='panel-title'><a class='collapsed' data-toggle='collapse' data-parent='#accordion' href='#collapse" + i + "' aria-expanded='false' aria-controls='collapse" + i + "'>" + reviewsObj[i].author_name + "<i class='mdi-hardware-keyboard-arrow-down' style='margin-left: 5px'></i></a><span id='rate" + i + "'style='float: right;'></span></h4></div><div id='collapse" + i + "' class='panel-collapse collapse' role='tabpanel' aria-labelledby='headingThree'><div class='panel-body'>" + reviewsObj[i].text + "</div></div></div>");
-        $('#rate' + i).raty({
-            numberMax: 5,
-            readOnly: true,
-            score: reviewsObj[i].rating
-        });
-    }
-    $('#rateModal').modal({
-
-    });
-    $('#collapse0').collapse({
-        toggle: true
-    });
-
-}
