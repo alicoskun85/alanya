@@ -170,6 +170,14 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap.css" />
+    <Content Include="Content\Data\Car.txt" />
+    <Content Include="Content\Data\Bisiklet.txt" />
+    <Content Include="Content\Data\CarDetay.txt" />
+    <Content Include="Content\Data\Kebap.txt" />
+    <Content Include="Content\Data\BisikletDetay.txt" />
+    <Content Include="Content\Data\Pizza.txt" />
+    <Content Include="Content\Data\KebapDetay.txt" />
+    <Content Include="Content\Data\PizzaDetay.txt" />
     <Content Include="Content\Data\Taxi.txt" />
     <Content Include="Content\Data\TaxiDetay.txt" />
     <Content Include="Content\Data\AtmDetay.txt" />

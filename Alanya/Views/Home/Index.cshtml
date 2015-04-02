@@ -103,7 +103,72 @@
             }
             return false
         });
-
+        var flag6 = false;
+        $("#atm").bind('touchstart click', function () {
+            if (!flag6) {
+                flag6 = true;
+                setTimeout(function () { flag6 = false; }, 100);
+                placeType = 'atm';
+                getlaces();
+                API.close();
+            }
+            return false
+        });
+        var flag7 = false;
+        $("#bag").bind('touchstart click', function () {
+            if (!flag7) {
+                flag7 = true;
+                setTimeout(function () { flag7 = false; }, 100);
+                placeType = 'bag';
+                getlaces();
+                API.close();
+            }
+            return false
+        });
+        var flag8 = false;
+        $("#bike").bind('touchstart click', function () {
+            if (!flag8) {
+                flag8 = true;
+                setTimeout(function () { flag8 = false; }, 100);
+                placeType = 'bisiklet';
+                getlaces();
+                API.close();
+            }
+            return false
+        });
+        var flag9 = false;
+        $("#kebap").bind('touchstart click', function () {
+            if (!flag9) {
+                flag9 = true;
+                setTimeout(function () { flag9 = false; }, 100);
+                placeType = 'kebap';
+                getlaces();
+                API.close();
+            }
+            return false
+        });
+        var flag10 = false;
+        $("#restaurant").bind('touchstart click', function () {
+            if (!flag10) {
+                flag10 = true;
+                setTimeout(function () { flag10 = false; }, 100);
+                placeType = 'restaurant';
+                getlaces();
+                API.close();
+            }
+            return false
+        });
+        var flag11 = false;
+        $("#car").bind('touchstart click', function () {
+            if (!flag11) {
+                flag11 = true;
+                setTimeout(function () { flag11 = false; }, 100);
+                placeType = 'car';
+                getlaces();
+                API.close();
+            }
+            return false
+        });
         //disable google infowindow
         $("#map-canvas").bind('touchstart click', function () {
             setTimeout(function () {
@@ -208,6 +273,7 @@
         map.setCenter(new google.maps.LatLng(lt, lg));
     }
     function getlaces() {
+        infoBubble.close();
         $('.preloader-wrapper').show();
         clearOverlays();
         jQuery('#places').html('');
@@ -276,7 +342,7 @@
             if ($('#panel').css('top') != "60px") {
                 $('#panel-body').toggle();
                 $('#panel').css({ top: '60px' });
-                $('#panel').css({ width: '100px' }); 
+                $('#panel').css({ width: '100px' });
             }
             service.getDetails(request, function (details, status) {
                 thumbsList = "";
@@ -374,13 +440,23 @@
     <ul>
         <li><a id="bar"><i class="mdi-maps-local-bar" style="padding-right: 10px;"></i>Bar</a></li>
         <li>
-            <a id="restaurant"><i class="mdi-maps-local-restaurant" style="padding-right: 10px;"></i>Food</a>
+            <a id=""><i class="mdi-maps-local-restaurant" style="padding-right: 10px;"></i>Food</a>
             <ul>
+                <li><a id="restaurant"><i class="mdi-maps-local-restaurant" style="padding-right: 10px;"></i>Restaurant</a></li>
                 <li><a id="pizza"><i class="mdi-maps-local-pizza" style="padding-right: 10px;"></i>Pizza</a></li>
-                <li><a id=""><i class="mdi-maps-local-pizza" style="padding-right: 10px;"></i>Pizza</a></li>
+                <li><a id="kebap"><i class="mdi-maps-local-restaurant" style="padding-right: 10px;"></i>Kebap</a></li>
             </ul>
         </li>
         <li><a id="taxi"><i class="mdi-maps-local-taxi" style="padding-right: 10px;"></i>Taxi</a></li>
+        <li><a id="atm"><i class="mdi-maps-local-atm" style="padding-right: 10px;"></i>ATM</a></li>
+        <li><a id="bag"><i class="mdi-action-shopping-basket" style="padding-right: 10px;"></i>Luggage & Bags</a></li>
+        <li>
+            <a id=""><i class="mdi-maps-directions-car" style="padding-right: 10px;"></i>Rent A Car/Bicycle</a>
+            <ul>
+                <li><a id="bike"><i class="mdi-maps-directions-bike" style="padding-right: 10px;"></i>Bicycle</a></li>
+                <li><a id="car"><i class="mdi-maps-directions-car" style="padding-right: 10px;"></i>Car</a></li>
+            </ul>
+        </li>
     </ul>
 </div>
 <a id="hamburger" class="waves-effect waves-light btn light-blue accent-2" style="position: fixed; top: 60px; left: 0px; padding-right: 8px; padding-left: 18px;" href="#menu"><i class="mdi-action-list" style="float:right"></i></a>
