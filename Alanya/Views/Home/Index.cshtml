@@ -201,23 +201,23 @@
         var myLatlng = new google.maps.LatLng(place.geometry.location.k, place.geometry.location.D);
         var marker = new google.maps.Marker({
             map: map,
-            //icon: {
-            //    path: google.maps.SymbolPath.CIRCLE,
-            //    scale: 1
-            //},
+            icon: {
+                path: google.maps.SymbolPath.CIRCLE,
+                scale: 1
+            },
             position: myLatlng
         });
         markers.push(marker);
 
-      //  var overlay = new CustomMarker(
-      //    myLatlng,
-      //    map,
-      //    {
-      //        marker_id: 'mdi-maps-local-' + placeType,
-      //        request: { placeId: place.place_id },
-      //        marker: marker
-      //    }
-      //);
+        var overlay = new CustomMarker(
+          myLatlng,
+          map,
+          {
+              marker_id: 'mdi-maps-local-' + placeType,
+              request: { placeId: place.place_id },
+              marker: marker
+          }
+      );
 
         var details = jQuery.grep(x, function (a) {
             return a.id == place.id;

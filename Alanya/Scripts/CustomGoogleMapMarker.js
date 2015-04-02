@@ -27,7 +27,7 @@ CustomMarker.prototype.draw = function () {
         div.style.height = '20px';
         //div.style.background = 'blue';
         if (typeof (self.args.marker_id) !== 'undefined') {
-            div.innerHTML = '<a class="btn-floating btn-large waves-effect waves-light red" style="top:10px"><i class="' + self.args.marker_id + '"></i></a>';
+            div.innerHTML = '<i class="' + self.args.marker_id + '"></i>';
         }
 
         //if (typeof(self.args.marker_id) !== 'undefined') {
