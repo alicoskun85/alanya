@@ -198,6 +198,7 @@
     <Content Include="Content\rate\jquery.raty.css" />
     <Content Include="Content\rate\jquery.raty.js" />
     <Content Include="Scripts\CustomGoogleMapMarker.js" />
+    <Content Include="Scripts\fastclick.js" />
     <Content Include="Scripts\infobubble.js" />
     <Content Include="Content\materialize\js\materialize.js" />
     <Content Include="Content\materialize\js\materialize.min.js" />

@@ -26,7 +26,8 @@ namespace Alanya
                       "~/Content/materialize/js/waves.js",
                       "~/Scripts/CustomGoogleMapMarker.js",
                       "~/Scripts/jquery.mmenu.min.all.js",
-                      "~/Content/lightSlider/js/jquery.lightSlider.js"
+                      "~/Content/lightSlider/js/jquery.lightSlider.js",
+                      "~/Scripts/fastclick.js"
                       ));
 
             //bundles.Add(new ScriptBundle("~/bundles/material").Include(

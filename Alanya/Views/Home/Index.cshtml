@@ -20,7 +20,7 @@
     var placeType = "restaurant";
     $(document).ready(function () {
         $.getScript('/Content/rate/jquery.raty.js');
-
+        FastClick.attach(document.body);
         infoBubble = new InfoBubble({
             maxWidth: 250,
             position: new google.maps.LatLng(-35, 151),
