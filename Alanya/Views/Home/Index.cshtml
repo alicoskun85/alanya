@@ -38,20 +38,20 @@
             arrowStyle: 2,
             minHeight: '100%'
         });
-        $('#panel').toggle("slow");
-        $('#panel-body').toggle("slow");
+        $('#panel').toggle();
+        $('#panel-body').toggle();
         $('#panel').css({ top: '60px' });
-        $('#panel').css({ width: '145px !important' });
+        $('#panel').css({ width: '100px !important' });
 
         var flag = false;
         $("#togglePanel").bind('touchstart click', function () {
             if (!flag) {
                 flag = true;
                 setTimeout(function () { flag = false; }, 100);
-                $('#panel-body').toggle("slow");
+                $('#panel-body').toggle();
                 if ($('#panel').css('top') != "60px") {
                     $('#panel').css({ top: '60px' });
-                    $('#panel').css({ width: '145px' });
+                    $('#panel').css({ width: '100px' });
                 }
                 else {
                     $('#panel').css({ top: '82px' });
@@ -109,9 +109,9 @@
             setTimeout(function () {
                 disableInfoWindows();
                 if ($('#panel').css('top') != "60px") {
-                    $('#panel-body').toggle("slow");
+                    $('#panel-body').toggle();
                     $('#panel').css({ top: '60px' });
-                    $('#panel').css({ width: '145px' });
+                    $('#panel').css({ width: '100px' });
                 }
             }, 555);
         });
@@ -254,9 +254,9 @@
     jQuery(document).on('click', '#places li', function () {
 
         if ($('#panel').css('top') != "60px") {
-            $('#panel-body').toggle("slow");
+            $('#panel-body').toggle();
             $('#panel').css({ top: '60px' });
-            $('#panel').css({ width: '145px' });
+            $('#panel').css({ width: '100px' });
         }
         var self = jQuery(this);
         //$('.details').remove();
@@ -303,7 +303,7 @@
     <div id="map-canvas"></div>
 
     <div id="panel" class="visible open">
-        <a id="togglePanel" class="waves-effect waves-light btn light-blue accent-2" style="width: 100%;"> <span>places</span><i class="mdi-action-list" style="float:right"></i></a>
+        <a id="togglePanel" class="waves-effect waves-light btn light-blue accent-2" style="width: 100%; padding-left: 5px; padding-right: 5px;"> <span>places</span><i class="mdi-action-list" style="float:right"></i></a>
         <div id="panel-body">
             <ul id="places"></ul>
         </div>
