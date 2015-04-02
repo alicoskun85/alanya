@@ -63,12 +63,12 @@ CustomMarker.prototype.draw = function () {
                         thumbsList += details.photos[i].getUrl({ 'maxWidth': 30, 'maxHeight': 30 }) + ",";
                         PicsList += details.photos[i].getUrl({ 'maxWidth': 300, 'maxHeight': 300 }) + ",";
                     }
-                    content += "<a class='btn-floating btn waves-effect waves-light pink lighten-3' style='float:right;margin-left: 10px;' onClick='imageDetayClick()'><i class='mdi-image-photo-camera'></i></a>";
+                    content += "<a class='btn-floating btn pink lighten-3' style='float:right;margin-left: 10px;' onClick='imageDetayClick()'><i class='mdi-image-photo-camera'></i></a>";
                 }
                 if (details.reviews != undefined) {
                     modalTitle = details.name;
                     reviewsObj = details.reviews
-                    content += "<a class='btn-floating btn waves-effect waves-light pink lighten-3' style='float:right' onClick='reviewDetayClick()'><i class='mdi-editor-insert-comment'></i></a>";
+                    content += "<a class='btn-floating btn pink lighten-3' style='float:right' onClick='reviewDetayClick()'><i class='mdi-editor-insert-comment'></i></a>";
                 }
                 content += "</div>";
 
