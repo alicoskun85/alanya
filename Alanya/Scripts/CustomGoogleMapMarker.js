@@ -27,7 +27,7 @@ CustomMarker.prototype.draw = function () {
         div.style.height = '20px';
         //div.style.background = 'blue';
         if (typeof (self.args.marker_id) !== 'undefined') {
-            div.innerHTML = '<i class="' + self.args.marker_id + '"></i>';
+            div.innerHTML = '<a class="btn-floating btn-large red" style="top:10px"><i class="' + self.args.marker_id + '"></i></a>';
         }
 
         //if (typeof(self.args.marker_id) !== 'undefined') {
@@ -119,7 +119,6 @@ function imageDetayClick() {
     $('#imageModal').modal({
         backdrop: false
     });
-
 }
 
 function reviewDetayClick() {
