@@ -199,55 +199,99 @@
     }
 
     function createMarker(place) {
-        var image = {
-            url: place.icon,
-            scaledSize: new google.maps.Size(25, 25)
-        };
+        //var image = {
+        //    url: place.icon,
+        //    scaledSize: new google.maps.Size(25, 25)
+        //};
         var myLatlng = new google.maps.LatLng(place.geometry.location.k, place.geometry.location.D);
         var marker = new google.maps.Marker({
             map: map,
-            icon: {
-                path: google.maps.SymbolPath.CIRCLE,
-                scale: 1
-            },
+            //icon: {
+            //    path: google.maps.SymbolPath.CIRCLE,
+            //    scale: 1
+            //},
             position: myLatlng
         });
-        markers.push(marker);
+        //markers.push(marker);
 
-        var overlay = new CustomMarker(
-          myLatlng,
-          map,
-          {
-              marker_id: 'mdi-maps-local-' + placeType,
-              request: { placeId: place.place_id },
-              marker: marker
-          }
-      );
+        //  var overlay = new CustomMarker(
+        //    myLatlng,
+        //    map,
+        //    {
+        //        marker_id: 'mdi-maps-local-' + placeType,
+        //        request: { placeId: place.place_id },
+        //        marker: marker
+        //    }
+        //);
 
         var details = jQuery.grep(x, function (a) {
             return a.id == place.id;
         });
 
-        if (place.opening_hours != undefined) {
-            if (place.opening_hours.open_now) {
-                if (place.rating != undefined) {
-                    jQuery('#places').append('<li class="open" data-placeid="' + place.place_id + '">' + details[0].name + ' - ' + place.rating + '/5<small></small></li>');
-                    count2++;
+        var request = { placeId: place.place_id };
+        google.maps.event.addDomListener(marker, "click", function (event) {
+
+            if ($('#panel').css('top') != "60px") {
+                $('#panel-body').toggle();
+                $('#panel').css({ top: '60px' });
+                $('#panel').css({ width: '100px' });
+            }
+            service.getDetails(request, function (details, status) {
+                thumbsList = "";
+                PicsList = "";
+                var content = "<div class='scrollFix'><div class='detailTitle'>" + details.name + "</div>";
+                if (details.formatted_address != undefined) {
+                    content += details.formatted_address + "<br />";
                 }
-                else { jQuery('#places').append('<li class="open" data-placeid="' + place.place_id + '">' + details[0].name + '<small></small></li>'); }
-                count2++;
-            }
-        }
-        else {
-            if (place.rating != undefined) {
-                jQuery('#places').append('<li data-placeid="' + place.place_id + '">' + details[0].name + ' - ' + place.rating + '/5<small></small></li>');
-                count2++;
-            }
-            else {
-                jQuery('#places').append('<li data-placeid="' + place.place_id + '">' + details[0].name + '<small></small></li>');
-                count2++;
-            }
-        }
+                if (details.website != undefined) {
+                    content += '<a href="' + details.website + '">' + details.website + '</a>' + "<br />";
+                }
+                if (details.rating != undefined) {
+                    content += details.rating + "<br />";
+                }
+                if (details.formatted_phone_number != undefined) {
+                    content += '<a href="tel:' + details.international_phone_number + '">' + details.formatted_phone_number + '</a>';
+                }
+                if (details.photos != undefined) {
+                    modalTitle = details.name;
+                    for (var i = 0; i < details.photos.length; i++) {
+                        thumbsList += details.photos[i].getUrl({ 'maxWidth': 30, 'maxHeight': 30 }) + ",";
+                        PicsList += details.photos[i].getUrl({ 'maxWidth': 300, 'maxHeight': 300 }) + ",";
+                    }
+                    content += "<a class='btn-floating btn pink lighten-3' style='float:right;margin-left: 10px;' onClick='imageDetayClick()'><i class='mdi-image-photo-camera'></i></a>";
+                }
+                if (details.reviews != undefined) {
+                    modalTitle = details.name;
+                    reviewsObj = details.reviews
+                    content += "<a class='btn-floating btn pink lighten-3' style='float:right' onClick='reviewDetayClick()'><i class='mdi-editor-insert-comment'></i></a>";
+                }
+                content += "</div>";
+
+                infoBubble.setContent(content);
+                infoBubble.open(map, marker);
+            });
+        });
+        jQuery('#places').append('<li data-placeid="' + place.place_id + '">' + details[0].name + '<small></small></li>');
+        //if (place.opening_hours != undefined) {
+        //    if (place.opening_hours.open_now) {
+        //        if (place.rating != undefined) {
+        //            jQuery('#places').append('<li class="open" data-placeid="' + place.place_id + '">' + details[0].name + ' - ' + place.rating + '/5<small></small></li>');
+        //            count2++;
+        //        }
+        //        else { jQuery('#places').append('<li class="open" data-placeid="' + place.place_id + '">' + details[0].name + '<small></small></li>'); }
+        //        count2++;
+        //    }
+        //}
+        //else {
+        //    if (place.rating != undefined) {
+        //        jQuery('#places').append('<li data-placeid="' + place.place_id + '">' + details[0].name + ' - ' + place.rating + '/5<small></small></li>');
+        //        count2++;
+        //    }
+        //    else {
+        //        jQuery('#places').append('<li data-placeid="' + place.place_id + '">' + details[0].name + '<small></small></li>');
+        //        count2++;
+        //    }
+        //}
     }
 
     google.maps.event.addDomListener(window, 'load', initialize);
