@@ -8,7 +8,6 @@
 <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=places"></script>
 <script>
     var map, placesList;
-
     var service; //declare globally
     var count = 0;
     var count2 = 0;
@@ -44,7 +43,6 @@
         $('#panel').css({ top: '60px' });
         $('#panel').css({ width: '145px !important' });
 
-
         var flag = false;
         $("#togglePanel").bind('touchstart click', function () {
             if (!flag) {
@@ -60,7 +58,6 @@
                     $('#panel').css({ width: '200px' });
                 }
             }
-
             return false
         });
 
@@ -204,23 +201,23 @@
         var myLatlng = new google.maps.LatLng(place.geometry.location.k, place.geometry.location.D);
         var marker = new google.maps.Marker({
             map: map,
-            icon: {
-                path: google.maps.SymbolPath.CIRCLE,
-                scale: 1
-            },
+            //icon: {
+            //    path: google.maps.SymbolPath.CIRCLE,
+            //    scale: 1
+            //},
             position: myLatlng
         });
         markers.push(marker);
 
-        var overlay = new CustomMarker(
-          myLatlng,
-          map,
-          {
-              marker_id: 'mdi-maps-local-' + placeType,
-              request: { placeId: place.place_id },
-              marker: marker
-          }
-      );
+      //  var overlay = new CustomMarker(
+      //    myLatlng,
+      //    map,
+      //    {
+      //        marker_id: 'mdi-maps-local-' + placeType,
+      //        request: { placeId: place.place_id },
+      //        marker: marker
+      //    }
+      //);
 
         var details = jQuery.grep(x, function (a) {
             return a.id == place.id;
@@ -274,10 +271,7 @@
             map.setZoom(20);
             map.panTo(details.geometry.location);
         });
-
     });
-
-
 </script>
 <div id="menu">
     <ul>
@@ -294,8 +288,8 @@
 </div>
 <a id="hamburger" class="waves-effect waves-light btn light-blue accent-2" style="position: fixed;bottom: 0px;width: 100%;" href="#menu"><i class="mdi-action-list" style="float:right"></i></a>
 <div style="margin-top:50px">
-    <div id="map-canvas"></div>
 
+    <div id="map-canvas"></div>
 
     <div id="panel" class="visible open">
         <a id="togglePanel" class="waves-effect waves-light btn light-blue accent-2" style="width: 100%;"> <span>places</span><i class="mdi-action-list" style="float:right"></i></a>
@@ -320,7 +314,6 @@
             </div>
         </div>
     </div>
-
     <div class="modal fade" id="rateModal" tabindex="-1" role="dialog" aria-labelledby="rateModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -331,7 +324,6 @@
                 <div class="modal-title-review">Reviews</div>
                 <div class="modal-body" id="reviewModalBody">
                 </div>
-
             </div>
         </div>
     </div>
