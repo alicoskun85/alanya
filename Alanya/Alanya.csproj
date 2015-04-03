@@ -175,6 +175,7 @@
     <Content Include="Content\Data\Car.txt" />
     <Content Include="Content\Data\Bisiklet.txt" />
     <Content Include="Content\Data\CarDetay.txt" />
+    <Content Include="Content\jquery.mmenu.iconbar.css" />
     <Content Include="Content\Data\Kebap.txt" />
     <Content Include="Content\Data\BisikletDetay.txt" />
     <Content Include="Content\Data\Pizza.txt" />

@@ -24,7 +24,7 @@ namespace Alanya
                       "~/Scripts/respond.js",
                       "~/Scripts/infobubble.js",
                       "~/Content/materialize/js/waves.js",
-                      "~/Scripts/CustomGoogleMapMarker.js",
+                      //"~/Scripts/CustomGoogleMapMarker.js",
                       "~/Scripts/jquery.mmenu.min.all.js",
                       "~/Content/lightSlider/js/jquery.lightSlider.js",
                       "~/Scripts/fastclick.js"
@@ -38,10 +38,11 @@ namespace Alanya
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstrap.css",
                       "~/Content/site.css",
-                      "~/Content/panel.css",
+                      //"~/Content/panel.css",
                       "~/Content/lightSlider/css/lightSlider.css",
                       "~/Content/jquery.mmenu.all.css",
                       "~/Content/icons/flaticon.css",
+                      //"~/Content/jquery.mmenu.iconbar.css",
                       "~/Content/rate/jquery.raty.css"
                       ));
             BundleTable.EnableOptimizations = true;

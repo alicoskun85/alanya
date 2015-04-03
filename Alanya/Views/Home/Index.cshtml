@@ -38,28 +38,28 @@
             arrowStyle: 2,
             minHeight: '100%'
         });
-        $('#panel').toggle();
-        $('#panel-body').toggle();
-        $('#panel').css({ top: '60px' });
-        $('#panel').css({ width: '100px !important' });
+        //$('#panel').toggle();
+        //$('#panel-body').toggle();
+        //$('#panel').css({ top: '60px' });
+        //$('#panel').css({ width: '100px !important' });
 
-        var flag = false;
-        $("#togglePanel").bind('touchstart click', function () {
-            if (!flag) {
-                flag = true;
-                setTimeout(function () { flag = false; }, 100);
-                $('#panel-body').toggle();
-                if ($('#panel').css('top') != "60px") {
-                    $('#panel').css({ top: '60px' });
-                    $('#panel').css({ width: '100px' });
-                }
-                else {
-                    $('#panel').css({ top: '82px' });
-                    $('#panel').css({ width: '200px' });
-                }
-            }
-            return false
-        });
+        //var flag = false;
+        //$("#togglePanel").bind('touchstart click', function () {
+        //    if (!flag) {
+        //        flag = true;
+        //        setTimeout(function () { flag = false; }, 100);
+        //        $('#panel-body').toggle();
+        //        if ($('#panel').css('top') != "60px") {
+        //            $('#panel').css({ top: '60px' });
+        //            $('#panel').css({ width: '100px' });
+        //        }
+        //        else {
+        //            $('#panel').css({ top: '82px' });
+        //            $('#panel').css({ width: '200px' });
+        //        }
+        //    }
+        //    return false
+        //});
 
         var flag2 = false;
         $("#detailModal").bind('touchstart click', function () {
@@ -184,11 +184,11 @@
         $("#map-canvas").bind('touchstart click', function () {
             setTimeout(function () {
                 disableInfoWindows();
-                if ($('#panel').css('top') != "60px") {
-                    $('#panel-body').toggle();
-                    $('#panel').css({ top: '60px' });
-                    $('#panel').css({ width: '100px' });
-                }
+                //if ($('#panel').css('top') != "60px") {
+                //    $('#panel-body').toggle();
+                //    $('#panel').css({ top: '60px' });
+                //    $('#panel').css({ width: '100px' });
+                //}
             }, 555);
         });
 
@@ -202,18 +202,15 @@
         //////////////////////////////
         $(window).resize(function () {
             $("#map-canvas").height($(window).height() - 60);
+            $('.modal .modal-body').css('overflow-y', 'auto');
+            $('.modal .modal-body').css('max-height', $(window).height() - 60);
 
         });
         $('#menu').mmenu({
-            extensions: ['effect-slide', 'pageshadow', "theme-dark"],
-            header: true,
-            searchfield: true,
-            counters: true,
-            footer: {
-                add: true,
-                content: '<a href="">Visit website &rsaquo;</a>'
-            }
+            extensions: ["theme-dark"],
 
+            searchfield: true,
+            counters: true
         });
         var API = $("#menu").data("mmenu");
         API.open();
@@ -241,19 +238,23 @@
         $("#imageModalBody").append("<ul id='lightSlider'></ul>");
         $("#imageModalLabel").html(modalTitle);
         for (var i = 0; i < thumbArr.length - 1; i++) {
-            $("#lightSlider").append('<li data-thumb="' + thumbArr[i] + '"> <a href="#"><img src="' + PicsArr[i] + '" /></a> </li>')
+            $("#lightSlider").append('<li data-thumb="' + thumbArr[i] + '"> <a href="#"><img src="' + PicsArr[i] + '"style=" width: 100%;" /></a> </li>')
         }
+
         $("#lightSlider").lightSlider({
             gallery: true,
             item: 1,
             loop: false,
             slideMargin: 0,
             thumbItem: 9,
-            responsive: []
+            responsive: [],
+            adaptiveHeight: true
+
         });
         $('#imageModal').modal({
             backdrop: false
         });
+
     }
 
     function reviewDetayClick() {
@@ -268,8 +269,9 @@
             });
         }
         $('#rateModal').modal({
-
+            backdrop: false
         });
+
         $('#collapse0').collapse({
             toggle: true
         });
@@ -287,8 +289,8 @@
         infoBubble.close();
         $('.preloader-wrapper').show();
         clearOverlays();
-        jQuery('#places').html('');
-        placesList = document.getElementById('places');
+        //jQuery('#places').html('');
+        //placesList = document.getElementById('places');
         service = new google.maps.places.PlacesService(map);
 
         $.ajax({
@@ -350,11 +352,11 @@
         var request = { placeId: place.place_id };
         google.maps.event.addDomListener(marker, "click", function (event) {
 
-            if ($('#panel').css('top') != "60px") {
-                $('#panel-body').toggle();
-                $('#panel').css({ top: '60px' });
-                $('#panel').css({ width: '100px' });
-            }
+            //if ($('#panel').css('top') != "60px") {
+            //    $('#panel-body').toggle();
+            //    $('#panel').css({ top: '60px' });
+            //    $('#panel').css({ width: '100px' });
+            //}
             service.getDetails(request, function (details, status) {
                 thumbsList = "";
                 PicsList = "";
@@ -374,8 +376,8 @@
                 if (details.photos != undefined) {
                     modalTitle = details.name;
                     for (var i = 0; i < details.photos.length; i++) {
-                        thumbsList += details.photos[i].getUrl({ 'maxWidth': 30, 'maxHeight': 30 }) + ",";
-                        PicsList += details.photos[i].getUrl({ 'maxWidth': 300, 'maxHeight': 300 }) + ",";
+                        thumbsList += details.photos[i].getUrl({ 'maxWidth': 60, 'maxHeight': 60 }) + ",";
+                        PicsList += details.photos[i].getUrl({ 'maxWidth': 1280, 'maxHeight': 1024 }) + ",";
                     }
                     content += "<a class='btn-floating btn pink lighten-3' style='float:right;margin-left: 10px;' onClick='imageDetayClick()'><i class='mdi-image-photo-camera'></i></a>";
                 }
@@ -390,7 +392,7 @@
                 infoBubble.open(map, marker);
             });
         });
-        jQuery('#places').append('<li data-placeid="' + place.place_id + '">' + details[0].name + '<small></small></li>');
+        //jQuery('#places').append('<li data-placeid="' + place.place_id + '">' + details[0].name + '<small></small></li>');
         //if (place.opening_hours != undefined) {
         //    if (place.opening_hours.open_now) {
         //        if (place.rating != undefined) {
@@ -414,44 +416,44 @@
     }
 
     google.maps.event.addDomListener(window, 'load', initialize);
-    jQuery(document).on('click', '#places li', function () {
+    //jQuery(document).on('click', '#places li', function () {
 
-        if ($('#panel').css('top') != "60px") {
-            $('#panel-body').toggle();
-            $('#panel').css({ top: '60px' });
-            $('#panel').css({ width: '100px' });
-        }
-        var self = jQuery(this);
-        //$('.details').remove();
-        var request = { placeId: self.data('placeid') };
-        service.getDetails(request, function (details, status) {
+    //    //if ($('#panel').css('top') != "60px") {
+    //    //    $('#panel-body').toggle();
+    //    //    $('#panel').css({ top: '60px' });
+    //    //    $('#panel').css({ width: '100px' });
+    //    //}
+    //    var self = jQuery(this);
+    //    //$('.details').remove();
+    //    var request = { placeId: self.data('placeid') };
+    //    service.getDetails(request, function (details, status) {
 
-            //    var content = "<div class='details'><br />";
-            //    if (details.formatted_address != undefined) {
-            //        content += details.formatted_address + "<br />";
-            //    }
-            //    if (details.website != undefined) {
-            //        content += details.website + "<br />";
-            //    }
-            //    if (details.rating != undefined) {
-            //        content += details.rating + "<br />";
-            //    }
-            //    if (details.formatted_phone_number != undefined) {
-            //        content += details.formatted_phone_number;
-            //    }
-            //    content += "</div>";
+    //        //    var content = "<div class='details'><br />";
+    //        //    if (details.formatted_address != undefined) {
+    //        //        content += details.formatted_address + "<br />";
+    //        //    }
+    //        //    if (details.website != undefined) {
+    //        //        content += details.website + "<br />";
+    //        //    }
+    //        //    if (details.rating != undefined) {
+    //        //        content += details.rating + "<br />";
+    //        //    }
+    //        //    if (details.formatted_phone_number != undefined) {
+    //        //        content += details.formatted_phone_number;
+    //        //    }
+    //        //    content += "</div>";
 
-            //    jQuery('small', self).html(content);
-            map.setZoom(20);
-            map.panTo(details.geometry.location);
-        });
-    });
+    //        //    jQuery('small', self).html(content);
+    //        map.setZoom(20);
+    //        map.panTo(details.geometry.location);
+    //    });
+    //});
 </script>
 <div id="menu">
     <ul>
         <li><a id="bar"><i class="flaticon-two31" style="padding-right: 10px;"></i>Bar</a></li>
         <li>
-            <a id=""><i class="flaticon-silver" style="padding-right: 10px;"></i>Food</a>
+            <a href="#mm-2" data-target="#mm-2"><i class="flaticon-silver" style="padding-right: 10px;"></i>Food</a>
             <ul>
                 <li><a id="restaurant"><i class="flaticon-silver" style="padding-right: 10px;"></i>Restaurant</a></li>
                 <li><a id="pizza"><i class="flaticon-snack" style="padding-right: 10px;"></i>Pizza</a></li>
@@ -462,7 +464,7 @@
         <li><a id="atm"><i class="flaticon-dollar4" style="padding-right: 10px;"></i>ATM</a></li>
         <li><a id="bag"><i class="flaticon-bag3" style="padding-right: 10px;"></i>Luggage & Bags</a></li>
         <li>
-            <a id=""><i class="flaticon-buy" style="padding-right: 10px;"></i>Rent A Car/Bicycle</a>
+            <a href="#mm-3" data-target="#mm-3"><i class="flaticon-buy" style="padding-right: 10px;"></i>Rent A Car/Bicycle</a>
             <ul>
                 <li><a id="bike"><i class="flaticon-bicycle4" style="padding-right: 10px;"></i>Bicycle</a></li>
                 <li><a id="car"><i class="flaticon-buy" style="padding-right: 10px;"></i>Car</a></li>
@@ -476,45 +478,45 @@
 </a>
 @*<img src="~/Content/img/1428059785_map-48.png" style="float: right; width: 35px;" />*@
 <div style="margin-top:50px">
-
     <div id="map-canvas"></div>
-
-    <div id="panel" class="visible open">
+</div>
+@*  <div id="panel" class="visible open">
         <a id="togglePanel" class="waves-effect waves-light btn light-blue accent-2" style="width: 100%; padding-left: 5px; padding-right: 5px;"> <span>places</span><i class="mdi-action-list" style="float:right"></i></a>
         <div id="panel-body">
             <ul id="places"></ul>
         </div>
+    </div>*@
+
+<!-- Button trigger modal -->
+<!-- Modal -->
+<div class="modal fade" id="imageModal" tabindex="-1" role="dialog" aria-labelledby="imageModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <a class="btn-floating btn-large waves-effect waves-light lime darken-1" data-dismiss="modal" aria-label="Close" style="top: -13px; float: right;"><i class="mdi-navigation-close"></i></a>
+                @*<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>*@
+                <div class="modal-title" id="imageModalLabel">Modal title</div>
+            </div>
+            <div class="modal-body" id="imageModalBody">
+                <ul id="lightSlider"></ul>
+            </div>
+
+        </div>
     </div>
-
-    <!-- Button trigger modal -->
-    <!-- Modal -->
-    <div class="modal fade" id="imageModal" tabindex="-1" role="dialog" aria-labelledby="imageModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                    <div class="modal-title" id="imageModalLabel">Modal title</div>
-                </div>
-                <div class="modal-body" id="imageModalBody">
-                    <ul id="lightSlider"></ul>
-                </div>
-
+</div>
+<div class="modal fade" id="rateModal" tabindex="-1" role="dialog" aria-labelledby="rateModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <a class="btn-floating btn-large waves-effect waves-light lime darken-1" data-dismiss="modal" aria-label="Close" style="top: -13px; float: right;"><i class="mdi-navigation-close"></i></a>
+                @*<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>*@
+                <div class="modal-title" id="rateModalLabel">Modal title</div>
+            </div>
+            <div class="modal-body" id="reviewModalBody">
             </div>
         </div>
     </div>
-    <div class="modal fade" id="rateModal" tabindex="-1" role="dialog" aria-labelledby="rateModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                    <div class="modal-title" id="rateModalLabel">Modal title</div>
-                </div>
-                <div class="modal-title-review">Reviews</div>
-                <div class="modal-body" id="reviewModalBody">
-                </div>
-            </div>
-        </div>
-    </div>
+</div>
 </div>
 <div class="preloader-wrapper big active">
     <div class="spinner-layer spinner-red-only">
