@@ -170,6 +170,8 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap.css" />
+    <Content Include="Content\Data\Atm - Copy.txt" />
+    <Content Include="Content\Data\HairDetay.txt" />
     <Content Include="Content\Data\Car.txt" />
     <Content Include="Content\Data\Bisiklet.txt" />
     <Content Include="Content\Data\CarDetay.txt" />
@@ -181,7 +183,7 @@
     <Content Include="Content\Data\Taxi.txt" />
     <Content Include="Content\Data\TaxiDetay.txt" />
     <Content Include="Content\Data\AtmDetay.txt" />
-    <Content Include="Content\Data\Atm.txt" />
+    <Content Include="Content\Data\Hair.txt" />
     <Content Include="Content\Data\Bag.txt" />
     <Content Include="Content\Data\BagDetay.txt" />
     <Content Include="Content\Data\Bar.txt" />
