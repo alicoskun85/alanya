@@ -187,6 +187,9 @@
     <Content Include="Content\Data\Bar.txt" />
     <Content Include="Content\Data\BarDetay.txt" />
     <Content Include="Content\Data\RestaurantDetay.txt" />
+    <Content Include="Content\icons\flaticon.css" />
+    <Content Include="Content\img\1428059785_map-48.png" />
+    <Content Include="Content\img\1428059911_map-.png" />
     <Content Include="Content\img\restaurant.png" />
     <Content Include="Content\jquery.mmenu.all.css" />
     <Content Include="Content\jquery.sidr.dark.css" />
@@ -230,6 +233,10 @@
     <Content Include="Content\rate\fonts\raty.svg" />
     <Content Include="Content\rate\fonts\raty.ttf" />
     <Content Include="Content\rate\fonts\raty.woff" />
+    <Content Include="Content\icons\flaticon.eot" />
+    <Content Include="Content\icons\flaticon.svg" />
+    <Content Include="Content\icons\flaticon.ttf" />
+    <Content Include="Content\icons\flaticon.woff" />
     <None Include="Properties\PublishProfiles\aa.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />

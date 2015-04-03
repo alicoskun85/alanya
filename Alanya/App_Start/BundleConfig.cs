@@ -41,6 +41,7 @@ namespace Alanya
                       "~/Content/panel.css",
                       "~/Content/lightSlider/css/lightSlider.css",
                       "~/Content/jquery.mmenu.all.css",
+                      "~/Content/icons/flaticon.css",
                       "~/Content/rate/jquery.raty.css"
                       ));
             BundleTable.EnableOptimizations = true;
