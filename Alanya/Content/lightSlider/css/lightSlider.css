@@ -135,6 +135,7 @@
     display: block;
     height: auto;
     max-width: 100%;
+   
 }
 .lSSlideOuter .lSPager.lSGallery:before, .lSSlideOuter .lSPager.lSGallery:after {
     content: " ";

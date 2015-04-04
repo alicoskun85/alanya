@@ -204,7 +204,7 @@
             $("#map-canvas").height($(window).height() - 60);
             $('.modal .modal-body').css('overflow-y', 'auto');
             $('.modal .modal-body').css('max-height', $(window).height() - 60);
-
+            $('.modal .modal-body img').css('max-height', $(window).height() - 180);
         });
         $('#menu').mmenu({
             extensions: ["theme-dark"],
@@ -238,7 +238,7 @@
         $("#imageModalBody").append("<ul id='lightSlider'></ul>");
         $("#imageModalLabel").html(modalTitle);
         for (var i = 0; i < thumbArr.length - 1; i++) {
-            $("#lightSlider").append('<li data-thumb="' + thumbArr[i] + '"> <a href="#"><img src="' + PicsArr[i] + '"style=" width: 100%;" /></a> </li>')
+            $("#lightSlider").append('<li data-thumb="' + thumbArr[i] + '"> <a href="#"><img src="' + PicsArr[i] + '"style=" width: 100%; max-height:800px;" /></a> </li>')
         }
 
         $("#lightSlider").lightSlider({
@@ -254,7 +254,6 @@
         $('#imageModal').modal({
             backdrop: false
         });
-
     }
 
     function reviewDetayClick() {
@@ -325,11 +324,15 @@
         //    scaledSize: new google.maps.Size(25, 25)
         //};
         var myLatlng = new google.maps.LatLng(place.geometry.location.k, place.geometry.location.D);
+        var details = jQuery.grep(x, function (a) {
+            return a.id == place.id;
+        });
+
         var marker = new google.maps.Marker({
             map: map,
             //icon: {
-            //    path: google.maps.SymbolPath.CIRCLE,
-            //    scale: 1
+            //    url: "/Content/icons/png/" + placeType + ".png",
+            //    scaledSize: new google.maps.Size(50, 50) // scaled size
             //},
             position: myLatlng
         });
@@ -345,9 +348,7 @@
         //    }
         //);
 
-        var details = jQuery.grep(x, function (a) {
-            return a.id == place.id;
-        });
+
 
         var request = { placeId: place.place_id };
         google.maps.event.addDomListener(marker, "click", function (event) {
@@ -470,7 +471,7 @@
                 <li><a id="car"><i class="flaticon-buy" style="padding-right: 10px;"></i>Car</a></li>
             </ul>
         </li>
-        <li><a id="hair"><i class="flaticon-scissors1" style="padding-right: 10px;"></i>Hair Salon</a></li>
+        <li><a id="hair"><i class="flaticon-dryer" style="padding-right: 10px;"></i>Hair Salon</a></li>
     </ul>
 </div>
 <a id="hamburger" class="waves-effect waves-light btn light-blue accent-2" style="position: fixed; top: 60px; left: 0px; padding-right: 8px; padding-left: 18px;" href="#menu">
