@@ -26,5 +26,11 @@ namespace Alanya.Controllers
 
             return View();
         }
+        public ActionResult Chat()
+        {
+            ViewBag.Message = "Chat Page";
+
+            return View();
+        }
     }
 }

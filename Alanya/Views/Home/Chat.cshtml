@@ -1,0 +1,81 @@
+﻿@{
+    ViewBag.Title = "Chat";
+}
+
+<script src="~/Scripts/jquery.signalR-2.2.0.js"></script>
+<script src="~/Scripts/jquery.signalR-2.2.0.min.js"></script>
+
+<script src="/signalr/Hubs"></script>
+
+<script>
+    $(function () {
+        var hub = $.connection.chatHub;
+        hub.connection.start().done(function () {
+            var username = prompt("Adınız : ");
+            var grupname = prompt("grup : ");
+            hub.server.connect(username, grupname);
+        });
+
+        hub.client.onConnected = function (userName, conId, groupName) {
+            $("#hdUserConId").val(conId);
+            $("#hdUserName").val(userName);
+            $("#hdUserGroupName").val(groupName);
+
+        }
+
+        hub.client.showAllUsers = function (allUsers) {
+
+            $(".userList ul").html("");
+            var userid = $("#hdUserConId").val();
+            for (var i = 0; i < allUsers.length; i++) {
+                if (userid == allUsers[i].ConID) {
+                    $(".userList ul").append("<li style='list-style:none'>" + allUsers[i].UserName + "</li>");
+                }
+                else {
+                    $(".userList ul").append("<li id='" + allUsers[i].ConID + "' style='list-style:none'>" + allUsers[i].UserName + "</li>");
+                }
+            }
+        }
+
+        hub.client.onUserDisconnected = function (conId) {
+            $("#" + conId).remove()
+        }
+        hub.client.sendmessage = function (message, userName) {
+            $(".groupmessage ul").append("<li style='color:blue;'>" + "<strong>" + userName + " : </strong> " + message + "</li>");
+        }
+
+        $("#btnSendMsg").click(function () {
+            var message = $(".txtMsg").val();
+            var userName = $("#hdUserName").val();
+            hub.server.sendMessage({ Msg: "Hello World", GroupName: "RoomA", UserName: "ass" });
+            //hub.server.sendMessage(message, userName);
+            $(".txtMsg").val("");
+
+        });
+
+
+    });
+
+</script>
+
+<h2>Chat</h2>
+
+<input type="hidden" id="hdUserName" />
+<input type="hidden" id="hdUserConId" />
+<input type="hidden" id="hdUserGroupName" />
+
+<div id="roomInterior">
+    <div class="userList">
+        <div class="userList-header">
+            <h3>Ziyaretçi</h3>
+        </div>
+        <ul></ul>
+    </div>
+</div>
+<div class="groupmessage">
+    <ul></ul>
+</div>
+<div id="footer">
+    <input type="text" class="txtMsg" />
+    <input type="button" id="btnSendMsg" value="Send" />
+</div>
