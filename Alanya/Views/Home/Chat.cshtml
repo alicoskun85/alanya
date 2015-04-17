@@ -20,11 +20,9 @@
             $("#hdUserConId").val(conId);
             $("#hdUserName").val(userName);
             $("#hdUserGroupName").val(groupName);
-
         }
 
         hub.client.showAllUsers = function (allUsers) {
-
             $(".userList ul").html("");
             var userid = $("#hdUserConId").val();
             for (var i = 0; i < allUsers.length; i++) {
@@ -40,6 +38,7 @@
         hub.client.onUserDisconnected = function (conId) {
             $("#" + conId).remove()
         }
+
         hub.client.sendmessage = function (message, userName) {
             $(".groupmessage ul").append("<li style='color:blue;'>" + "<strong>" + userName + " : </strong> " + message + "</li>");
         }
@@ -47,12 +46,11 @@
         $("#btnSendMsg").click(function () {
             var message = $(".txtMsg").val();
             var userName = $("#hdUserName").val();
-            hub.server.sendMessage({ Msg: "Hello World", GroupName: "RoomA", UserName: "ass" });
+            var groupName = $("#hdUserGroupName").val();
+            hub.server.sendMessage({ Msg: message, GroupName: groupName, UserName: userName });
             //hub.server.sendMessage(message, userName);
             $(".txtMsg").val("");
-
         });
-
 
     });
 
