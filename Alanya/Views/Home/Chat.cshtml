@@ -5,6 +5,9 @@
 <script src="~/Scripts/jquery.signalR-2.2.0.js"></script>
 <script src="~/Scripts/jquery.signalR-2.2.0.min.js"></script>
 <script src="/signalr/Hubs"></script>
+<link href="~/Content/jquery.mmenu.widescreen.css" type="text/css" rel="stylesheet"
+      />
+
 <style>
     .mm-menu {
         width: 50%;
@@ -86,7 +89,7 @@
         });
 
         $('#usermenu').mmenu({
-            extensions: ["theme-dark"]
+            extensions: ["widescreen", "theme-dark"]
         });
         var API = $("#usermenu").data("mmenu");
         API.open();
@@ -113,14 +116,12 @@
                 <input id="first_name2" type="text" class="txtMsg">
                 <label class="active" for="first_name2">Message</label>
             </div>
-            <a class="waves-effect waves-light btn light-blue" id="btnSendMsg" style="padding-left: 5px; padding-right: 5px; height: 60px;"><i class="mdi-content-send right"></i>Send</a>
+            <a class="waves-effect waves-light btn" id="btnSendMsg" style="padding-left: 5px; padding-right: 5px; height: 60px;"><i class="mdi-content-send right"></i>Send</a>
         </div>
 
     </div>
 </div>
 
-<div id="usermenu">
-
-    <i class="mdi-social-people" style="padding-right: 10px;"></i>
-    <ul></ul>
+<div id="usermenu">    
+    <ul style="margin-top: 45px;"></ul>
 </div>
