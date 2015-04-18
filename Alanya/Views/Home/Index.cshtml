@@ -4,7 +4,6 @@
 }
 <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
 <meta charset="utf-8">
-<link href="~/Content/materialize/css/materialize.css" rel="stylesheet" />
 <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=places"></script>
 <script>
     var map, placesList;
@@ -450,6 +449,20 @@
     //    });
     //});
 </script>
+<style>
+    input[type=text], input[type=password], input[type=email], input[type=url], input[type=date], input[type=tel], input[type=number], input[type=search], textarea.materialize-textarea {
+        padding-left: 10px;
+    }
+
+    .mm-menu > .mm-panel > .mm-listview.mm-first {
+        margin-top: 0px;
+    }
+
+    .mm-menu.mm-theme-dark .mm-search input {
+        max-width: 300px;
+    }
+</style>
+
 <div id="menu">
     <ul>
         <li><a id="bar"><i class="flaticon-two31" style="padding-right: 10px;"></i>Bar</a></li>
@@ -482,7 +495,7 @@
     <div id="map-canvas"></div>
 </div>
 @*  <div id="panel" class="visible open">
-        <a id="togglePanel" class="waves-effect waves-light btn light-blue accent-2" style="width: 100%; padding-left: 5px; padding-right: 5px;"> <span>places</span><i class="mdi-action-list" style="float:right"></i></a>
+        <a id="togglePanel" class="waves-effect waves-purple btn light-blue accent-2" style="width: 100%; padding-left: 5px; padding-right: 5px;"> <span>places</span><i class="mdi-action-list" style="float:right"></i></a>
         <div id="panel-body">
             <ul id="places"></ul>
         </div>

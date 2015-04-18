@@ -4,9 +4,25 @@
 
 <script src="~/Scripts/jquery.signalR-2.2.0.js"></script>
 <script src="~/Scripts/jquery.signalR-2.2.0.min.js"></script>
-
 <script src="/signalr/Hubs"></script>
+<style>
+    .mm-menu {
+        width: 50%;
+    }
 
+    .groupmessage {
+        margin-top: 50px;
+        margin-left: 10px;
+    }
+
+    #footer {
+    }
+
+    .card-panel {
+        padding: 10px;
+        margin: 0.2rem 0 0rem 0;
+    }
+</style>
 <script>
     $(function () {
         var hub = $.connection.chatHub;
@@ -23,14 +39,15 @@
         }
 
         hub.client.showAllUsers = function (allUsers) {
-            $(".userList ul").html("");
+            $("#usermenu ul").html("");
             var userid = $("#hdUserConId").val();
             for (var i = 0; i < allUsers.length; i++) {
                 if (userid == allUsers[i].ConID) {
-                    $(".userList ul").append("<li style='list-style:none'>" + allUsers[i].UserName + "</li>");
+
+                    $("#usermenu ul").append("<li style='font-size: 18px;'><i class='small mdi-social-person' style='margin: 0px 10px 0px 10px;'></i>" + allUsers[i].UserName + "</li>");
                 }
                 else {
-                    $(".userList ul").append("<li id='" + allUsers[i].ConID + "' style='list-style:none'>" + allUsers[i].UserName + "</li>");
+                    $("#usermenu ul").append("<li id='" + allUsers[i].ConID + "' style='font-size: 18px;'><i class='small mdi-social-person' style='margin: 0px 10px 0px 10px;'></i>" + allUsers[i].UserName + "</li>");
                 }
             }
         }
@@ -40,40 +57,70 @@
         }
 
         hub.client.sendmessage = function (message, userName) {
-            $(".groupmessage ul").append("<li style='color:blue;'>" + "<strong>" + userName + " : </strong> " + message + "</li>");
+            $(".groupmessage ul").append("<li class='card-panel teal white-text'>" + "<strong style='color: rgb(128, 207, 255);font-weight: bold;'>" + userName + " : </strong> " + message + "</li>");
         }
 
         $("#btnSendMsg").click(function () {
             var message = $(".txtMsg").val();
-            var userName = $("#hdUserName").val();
-            var groupName = $("#hdUserGroupName").val();
-            hub.server.sendMessage({ Msg: message, GroupName: groupName, UserName: userName });
-            //hub.server.sendMessage(message, userName);
-            $(".txtMsg").val("");
+            if (message != "") {
+                var userName = $("#hdUserName").val();
+                var groupName = $("#hdUserGroupName").val();
+                hub.server.sendMessage({ Msg: message, GroupName: groupName, UserName: userName });
+                //hub.server.sendMessage(message, userName);
+                $(".txtMsg").val("");
+                $(".groupmessage").animate({ scrollTop: $(".groupmessage ul").height() }, '100', 'swing', function () {
+
+                });
+            }
         });
+        $("#footer").css('position', 'fixed');
+        $("#footer").css('width', '100%');
+        $("#footer").css('top', $(window).height() - 70);
+        $(".groupmessage").css('height', $(window).height() - 130);
+        $('.groupmessage').css('overflow-y', 'auto');
+        $('.groupmessage').css('overflow-x', 'hidden');
+        $(window).resize(function () {
+            $('.groupmessage').css('overflow-y', 'auto');
+            $("#footer").css('top', $(window).height() - 70);
+            $(".groupmessage").css('height', $(window).height() - 130);
+        });
+
+        $('#usermenu').mmenu({
+            extensions: ["theme-dark"]
+        });
+        var API = $("#usermenu").data("mmenu");
+        API.open();
+
 
     });
 
 </script>
 
-<h2>Chat</h2>
-
 <input type="hidden" id="hdUserName" />
 <input type="hidden" id="hdUserConId" />
 <input type="hidden" id="hdUserGroupName" />
 
-<div id="roomInterior">
-    <div class="userList">
-        <div class="userList-header">
-            <h3>Ziyaretçi</h3>
-        </div>
-        <ul></ul>
-    </div>
-</div>
+
 <div class="groupmessage">
     <ul></ul>
 </div>
 <div id="footer">
-    <input type="text" class="txtMsg" />
-    <input type="button" id="btnSendMsg" value="Send" />
+
+    <div class="row">
+
+        <div class="row">
+            <div class="input-field col s8">
+                <input id="first_name2" type="text" class="txtMsg">
+                <label class="active" for="first_name2">Message</label>
+            </div>
+            <a class="waves-effect waves-light btn light-blue" id="btnSendMsg" style="padding-left: 5px; padding-right: 5px; height: 60px;"><i class="mdi-content-send right"></i>Send</a>
+        </div>
+
+    </div>
+</div>
+
+<div id="usermenu">
+
+    <i class="mdi-social-people" style="padding-right: 10px;"></i>
+    <ul></ul>
 </div>

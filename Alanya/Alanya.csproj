@@ -387,6 +387,7 @@
     <Content Include="Content\lightSlider\js\jquery.lightSlider.js" />
     <Content Include="Content\lightSlider\js\jquery.lightSlider.min.js" />
     <Content Include="Content\materialize\css\materialize.css" />
+    <Content Include="Content\materialize\js\form.js" />
     <Content Include="Content\materialize\js\init.js" />
     <Content Include="Content\materialize\js\leanModal.js" />
     <Content Include="Content\materialize\js\waves.js" />
