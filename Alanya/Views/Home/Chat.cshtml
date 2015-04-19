@@ -5,8 +5,7 @@
 <script src="~/Scripts/jquery.signalR-2.2.0.js"></script>
 <script src="~/Scripts/jquery.signalR-2.2.0.min.js"></script>
 <script src="/signalr/Hubs"></script>
-<link href="~/Content/jquery.mmenu.widescreen.css" type="text/css" rel="stylesheet"
-      />
+<link href="~/Content/jquery.mmenu.widescreen.css" type="text/css" rel="stylesheet" />
 
 <style>
     .mm-menu {
@@ -15,7 +14,6 @@
 
     .groupmessage {
         margin-top: 50px;
-        margin-left: 10px;
     }
 
     #footer {
@@ -24,6 +22,10 @@
     .card-panel {
         padding: 10px;
         margin: 0.2rem 0 0rem 0;
+    }
+
+    .row .col {
+        padding: 0 0.1rem;
     }
 </style>
 <script>
@@ -61,6 +63,7 @@
 
         hub.client.sendmessage = function (message, userName) {
             $(".groupmessage ul").append("<li class='card-panel teal white-text'>" + "<strong style='color: rgb(128, 207, 255);font-weight: bold;'>" + userName + " : </strong> " + message + "</li>");
+            scrollDown();
         }
 
         $("#btnSendMsg").click(function () {
@@ -71,21 +74,29 @@
                 hub.server.sendMessage({ Msg: message, GroupName: groupName, UserName: userName });
                 //hub.server.sendMessage(message, userName);
                 $(".txtMsg").val("");
-                $(".groupmessage").animate({ scrollTop: $(".groupmessage ul").height() }, '100', 'swing', function () {
-
-                });
             }
         });
+
+        function scrollDown() {
+            $(".groupmessage").animate({ scrollTop: $(".groupmessage ul").height() }, '100', 'swing', function () {
+            });
+        }
         $("#footer").css('position', 'fixed');
         $("#footer").css('width', '100%');
         $("#footer").css('top', $(window).height() - 70);
         $(".groupmessage").css('height', $(window).height() - 130);
         $('.groupmessage').css('overflow-y', 'auto');
         $('.groupmessage').css('overflow-x', 'hidden');
+
+        //$("#btnSendMsg").css('top', '-65px');
         $(window).resize(function () {
             $('.groupmessage').css('overflow-y', 'auto');
             $("#footer").css('top', $(window).height() - 70);
             $(".groupmessage").css('height', $(window).height() - 130);
+            //$("#btnSendMsg").css('left', $(window).width() - ($(window).width() - ($('.body-content').width()) + 83));
+            //$("#btnSendMsg").css('top', '-65px');
+            $(".input-field.col").css('width', $(window).width() - ($(window).width() - ($('.body-content').width()) + 90));
+
         });
 
         $('#usermenu').mmenu({
@@ -94,7 +105,9 @@
         var API = $("#usermenu").data("mmenu");
         API.open();
 
-
+        //$("#btnSendMsg").css('left', $(window).width() - ($(window).width() - ($('.body-content').width()) + 83));
+        $(".input-field.col").css('width', $(window).width() - ($(window).width() - ($('.body-content').width()) + 90));
+        
     });
 
 </script>
@@ -112,7 +125,7 @@
     <div class="row">
 
         <div class="row">
-            <div class="input-field col s8">
+            <div class="input-field col">
                 <input id="first_name2" type="text" class="txtMsg">
                 <label class="active" for="first_name2">Message</label>
             </div>
@@ -122,6 +135,6 @@
     </div>
 </div>
 
-<div id="usermenu">    
+<div id="usermenu">
     <ul style="margin-top: 45px;"></ul>
 </div>
