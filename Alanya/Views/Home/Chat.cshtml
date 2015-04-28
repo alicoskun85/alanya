@@ -1,15 +1,18 @@
 ﻿@{
     ViewBag.Title = "Chat";
 }
-
 <script src="~/Scripts/jquery.signalR-2.2.0.js"></script>
 <script src="~/Scripts/jquery.signalR-2.2.0.min.js"></script>
 <script src="/signalr/Hubs"></script>
 <link href="~/Content/jquery.mmenu.widescreen.css" type="text/css" rel="stylesheet" />
-
+<link href="~/Content/emoji20.css" rel="stylesheet" />
+<script src="~/Scripts/Chat.emoji.js"></script>
 <style>
-    .mm-menu {
+   
+    .col {
         width: 50%;
+        float: left;
+        padding: 2px;
     }
 
     .groupmessage {
@@ -27,22 +30,21 @@
     .row .col {
         padding: 0 0.1rem;
     }
+
+    .row {
+        margin-bottom: 0px;
+    }
 </style>
 <script>
     $(function () {
+        //signal-r functions
         var hub = $.connection.chatHub;
-        hub.connection.start().done(function () {
-            var username = prompt("Adınız : ");
-            var grupname = prompt("grup : ");
-            hub.server.connect(username, grupname);
-        });
 
         hub.client.onConnected = function (userName, conId, groupName) {
             $("#hdUserConId").val(conId);
             $("#hdUserName").val(userName);
             $("#hdUserGroupName").val(groupName);
         }
-
         hub.client.showAllUsers = function (allUsers) {
             $("#usermenu ul").html("");
             var userid = $("#hdUserConId").val();
@@ -56,17 +58,17 @@
                 }
             }
         }
-
         hub.client.onUserDisconnected = function (conId) {
             $("#" + conId).remove()
         }
-
         hub.client.sendmessage = function (message, userName) {
+            message = parseEmoji(message);
             $(".groupmessage ul").append("<li class='card-panel teal white-text'>" + "<strong style='color: rgb(128, 207, 255);font-weight: bold;'>" + userName + " : </strong> " + message + "</li>");
             scrollDown();
         }
+        //end-signal-r functions
 
-        $("#btnSendMsg").click(function () {
+        function sendMessage() {
             var message = $(".txtMsg").val();
             if (message != "") {
                 var userName = $("#hdUserName").val();
@@ -75,55 +77,137 @@
                 //hub.server.sendMessage(message, userName);
                 $(".txtMsg").val("");
             }
-        });
-
-        function scrollDown() {
-            $(".groupmessage").animate({ scrollTop: $(".groupmessage ul").height() }, '100', 'swing', function () {
-            });
         }
-        $("#footer").css('position', 'fixed');
-        $("#footer").css('width', '100%');
-        $("#footer").css('top', $(window).height() - 70);
-        $(".groupmessage").css('height', $(window).height() - 130);
-        $('.groupmessage').css('overflow-y', 'auto');
-        $('.groupmessage').css('overflow-x', 'hidden');
 
-        //$("#btnSendMsg").css('top', '-65px');
-        $(window).resize(function () {
-            $('.groupmessage').css('overflow-y', 'auto');
-            $("#footer").css('top', $(window).height() - 70);
-            $(".groupmessage").css('height', $(window).height() - 130);
-            //$("#btnSendMsg").css('left', $(window).width() - ($(window).width() - ($('.body-content').width()) + 83));
-            //$("#btnSendMsg").css('top', '-65px');
-            $(".input-field.col").css('width', $(window).width() - ($(window).width() - ($('.body-content').width()) + 90));
-
-        });
-
+        //sol menu
         $('#usermenu').mmenu({
             extensions: ["widescreen", "theme-dark"]
         });
         var API = $("#usermenu").data("mmenu");
         API.open();
+        //end-sol menu
 
-        //$("#btnSendMsg").css('left', $(window).width() - ($(window).width() - ($('.body-content').width()) + 83));
+        //responsive design
+        $("#footer").css('position', 'fixed');
+        $("#footer").css('width', '100%');
+        $("#footer").css('top', $(window).height() - 70);
+        $(".card").css('top', $(window).height() - 85);
+        $(".groupmessage").css('height', $(window).height() - 130);
+        $('.groupmessage').css('overflow-y', 'auto');
+        $('.groupmessage').css('overflow-x', 'hidden');
+        $(".modal-body").css('height', $(window).height() - 70);
+        $(".modal-content").css('height', $(window).height() - 30);
+        $('.modal-body').css('overflow-y', 'auto');
         $(".input-field.col").css('width', $(window).width() - ($(window).width() - ($('.body-content').width()) + 90));
-        
+        $(window).resize(function () {
+            $('.groupmessage').css('overflow-y', 'auto');
+            $("#footer").css('top', $(window).height() - 70);
+            $(".groupmessage").css('height', $(window).height() - 130);
+            $(".input-field.col").css('width', $(window).width() - ($(window).width() - ($('.body-content').width()) + 90));
+            $(".mdi-navigation-close").trigger("click");
+            $(".card").css('width', '25px');
+            $(".card").css('height', '30px');
+            $(".card").css('top', $(window).height() - 85);
+            $(".card").css('left', 80);
+            $('.card-reveal').css('transform', 'translateY(0)');
+            $(".modal-body").css('height', $(window).height() - 70);
+            $(".modal-content").css('height', $(window).height() - 30);
+
+        });
+        //end-responsive design
+
+        //mesaj gönderme.
+        $(document).keypress(function (e) {
+            if (e.which == 13) {
+                sendMessage();
+            }
+        });
+        $("#btnSendMsg").click(function () {
+            sendMessage();
+        });
+        //end-mesaj gönderme.
+
+
+        $(".card-panel").click(function () {
+            $("#hdUserGroupName").val($(this).find('.black-text').text().replace('\n','').trim());
+            hub.connection.start().done(function () {
+                var username = "aliiii";
+                //var grupname = prompt("grup : ");
+                var grupname = $("#hdUserGroupName").val();
+                hub.server.connect(username, grupname);
+            });
+            $('#languageModal').modal('hide');
+        });
+
+        $(".activator").click(function () {
+            $(".card").css('width', '100%');
+            $(".card").css('height', '250px');
+            $(".card").css('top', $(window).height() - 335);
+            $(".card").css('left', 0);
+            $("#emojiList").html("");
+            var emojis = Emoji.getIcons();
+            for (var i = 0; i < emojis.length; i++) {
+                var emoji = emojis[i].replace(":", "");
+                $("#emojiList").append('<span class="emoji20 emoji20-' + emoji + '" alt="' + emoji + '" title="' + emoji + '" style="cursor: pointer;" onclick="useEmoji(\'' + emoji + '\')" />');
+            }
+
+        });
+
+
+        $('#languageModal').modal({
+            backdrop: false
+        });
+
     });
 
-</script>
+    //functions
 
+    function scrollDown() {
+        $(".groupmessage").animate({ scrollTop: $(".groupmessage ul").height() }, '100', 'swing', function () {
+        });
+    }
+    function parseEmoji(content) {
+        var parser = new Emoji.Parser().parse;
+        return parseEmojiHtml(parser(content));
+    }
+    function parseEmojiHtml(content) {
+        var parser = new Emoji.Parser().transformToHtml;
+        return (parser(content));
+    }
+    function useEmoji(emoji) {
+        $(".mdi-navigation-close").trigger("click");
+        parseEmoji(":" + emoji + ":");
+        $(".txtMsg").val($(".txtMsg").val() + ":" + emoji + ":");
+        $(".card").css('width', '25px');
+        $(".card").css('height', '30px');
+        $(".card").css('top', $(window).height() - 85);
+        $(".card").css('left', 80);
+        $('.input-field label').addClass("active");
+        $('.card-reveal').css('transform', 'translateY(0)');
+
+    }
+    //end-functions
+
+
+</script>
 <input type="hidden" id="hdUserName" />
 <input type="hidden" id="hdUserConId" />
 <input type="hidden" id="hdUserGroupName" />
+<div class="card" style="width: 25px; height: 30px; position: absolute; left: 80px; z-index: 1;">
+    <div class="card-reveal">
+        @*<span class="card-title grey-text text-darken-4">Emojis<i class="mdi-navigation-close right"></i></span>*@
 
+        <p id="emojiList"></p>
+    </div>
+    <span class="card-title activator grey-text text-darken-4"><i class="mdi-editor-insert-emoticon"></i></span>
 
+</div>
 <div class="groupmessage">
     <ul></ul>
 </div>
+
 <div id="footer">
-
     <div class="row">
-
         <div class="row">
             <div class="input-field col">
                 <input id="first_name2" type="text" class="txtMsg">
@@ -131,10 +215,219 @@
             </div>
             <a class="waves-effect waves-light btn" id="btnSendMsg" style="padding-left: 5px; padding-right: 5px; height: 60px;"><i class="mdi-content-send right"></i>Send</a>
         </div>
-
     </div>
 </div>
-
 <div id="usermenu">
     <ul style="margin-top: 45px;"></ul>
+</div>
+
+<div class="modal fade" id="languageModal" tabindex="-1" role="dialog" aria-labelledby="languageModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                @*<a class="btn-floating btn-large waves-effect waves-light lime darken-1" data-dismiss="modal" aria-label="Close" style="top: -13px; float: right;"><i class="mdi-navigation-close"></i></a>*@
+                @*<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>*@
+                <div class="modal-title" id="languageModalLabel">Choose Your Room</div>
+            </div>
+            <div class="modal-body" id="languageModalBody">
+                <div class="col s6 ">
+                    <div class="card-panel grey lighten-5 z-depth-1 waves-effect waves-teal" style="display: block;">
+                        <div class="row valign-wrapper">
+                            <div class="col s2">
+                                <img src="/Content/images/UK.png" alt="" class="circle responsive-img"> <!-- notice the "circle" class -->
+                            </div>
+                            <div class="col s4">
+                                <span class="black-text">
+                                    English
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col s6 ">
+                    <div class="card-panel grey lighten-5 z-depth-1 waves-effect waves-teal" style="display: block;">
+                        <div class="row valign-wrapper">
+                            <div class="col s2">
+                                <img src="/Content/images/Rossiya-Russia.png" alt="" class="circle responsive-img"> <!-- notice the "circle" class -->
+                            </div>
+                            <div class="col s4">
+                                <span class="black-text">
+                                    Russian
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col s6 ">
+                    <div class="card-panel grey lighten-5 z-depth-1 waves-effect waves-teal" style="display: block;">
+                        <div class="row valign-wrapper">
+                            <div class="col s2">
+                                <img src="/Content/images/Deutschland-Germany.png" alt="" class="circle responsive-img"> <!-- notice the "circle" class -->
+                            </div>
+                            <div class="col s4">
+                                <span class="black-text">
+                                    German
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col s6 ">
+                    <div class="card-panel grey lighten-5 z-depth-1 waves-effect waves-teal" style="display: block;">
+                        <div class="row valign-wrapper">
+                            <div class="col s2">
+                                <img src="/Content/images/Nederlands-Netherlands.png" alt="" class="circle responsive-img"> <!-- notice the "circle" class -->
+                            </div>
+                            <div class="col s4">
+                                <span class="black-text">
+                                    Dutch
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col s6 ">
+                    <div class="card-panel grey lighten-5 z-depth-1 waves-effect waves-teal" style="display: block;">
+                        <div class="row valign-wrapper">
+                            <div class="col s2">
+                                <img src="/Content/images/France.png" alt="" class="circle responsive-img"> <!-- notice the "circle" class -->
+                            </div>
+                            <div class="col s4">
+                                <span class="black-text">
+                                    French
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col s6 ">
+                    <div class="card-panel grey lighten-5 z-depth-1 waves-effect waves-teal" style="display: block;">
+                        <div class="row valign-wrapper">
+                            <div class="col s2">
+                                <img src="/Content/images/Italia.png" alt="" class="circle responsive-img"> <!-- notice the "circle" class -->
+                            </div>
+                            <div class="col s4">
+                                <span class="black-text">
+                                    Italian
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col s6 ">
+                    <div class="card-panel grey lighten-5 z-depth-1 waves-effect waves-teal" style="display: block;">
+                        <div class="row valign-wrapper">
+                            <div class="col s2">
+                                <img src="/Content/images/Espanya-Spain.png" alt="" class="circle responsive-img"> <!-- notice the "circle" class -->
+                            </div>
+                            <div class="col s4">
+                                <span class="black-text">
+                                    Spanish
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col s6 ">
+                    <div class="card-panel grey lighten-5 z-depth-1 waves-effect waves-teal" style="display: block;">
+                        <div class="row valign-wrapper">
+                            <div class="col s2">
+                                <img src="/Content/images/Norge-Norway.png" alt="" class="circle responsive-img"> <!-- notice the "circle" class -->
+                            </div>
+                            <div class="col s4">
+                                <span class="black-text">
+                                    Norwegian
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col s6 ">
+                    <div class="card-panel grey lighten-5 z-depth-1 waves-effect waves-teal" style="display: block;">
+                        <div class="row valign-wrapper">
+                            <div class="col s2">
+                                <img src="/Content/images/Sverige-Sweden.png" alt="" class="circle responsive-img"> <!-- notice the "circle" class -->
+                            </div>
+                            <div class="col s4">
+                                <span class="black-text">
+                                    Swewdish
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col s6 ">
+                    <div class="card-panel grey lighten-5 z-depth-1 waves-effect waves-teal" style="display: block;">
+                        <div class="row valign-wrapper">
+                            <div class="col s2">
+                                <img src="/Content/images/Suomi-Finland.png" alt="" class="circle responsive-img"> <!-- notice the "circle" class -->
+                            </div>
+                            <div class="col s4">
+                                <span class="black-text">
+                                    Finnish
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col s6 ">
+                    <div class="card-panel grey lighten-5 z-depth-1 waves-effect waves-teal" style="display: block;">
+                        <div class="row valign-wrapper">
+                            <div class="col s2">
+                                <img src="/Content/images/Ellas-Greece.png" alt="" class="circle responsive-img"> <!-- notice the "circle" class -->
+                            </div>
+                            <div class="col s4">
+                                <span class="black-text">
+                                    Greek
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col s6 ">
+                    <div class="card-panel grey lighten-5 z-depth-1 waves-effect waves-teal" style="display: block;">
+                        <div class="row valign-wrapper">
+                            <div class="col s2">
+                                <img src="/Content/images/Polska-Poland.png" alt="" class="circle responsive-img"> <!-- notice the "circle" class -->
+                            </div>
+                            <div class="col s4">
+                                <span class="black-text">
+                                    Polish
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col s6 ">
+                    <div class="card-panel grey lighten-5 z-depth-1 waves-effect waves-teal" style="display: block;">
+                        <div class="row valign-wrapper">
+                            <div class="col s2">
+                                <img src="/Content/images/Nihon-Japan.png" alt="" class="circle responsive-img"> <!-- notice the "circle" class -->
+                            </div>
+                            <div class="col s4">
+                                <span class="black-text">
+                                    Japanese
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col s6 ">
+                    <div class="card-panel grey lighten-5 z-depth-1 waves-effect waves-teal" style="display: block;">
+                        <div class="row valign-wrapper">
+                            <div class="col s2">
+                                <img src="/Content/images/Zhongguo-China.png" alt="" class="circle responsive-img"> <!-- notice the "circle" class -->
+                            </div>
+                            <div class="col s4">
+                                <span class="black-text">
+                                    Chinese
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
 </div>
